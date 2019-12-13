@@ -47,7 +47,9 @@ function getFileUrl( subject ) {
         if ( !subject ) {
             resolve( null );
         } else if ( typeof subject === 'string' ) {
-            if ( instanceAttachments && ( Object.prototype.hasOwnProperty.call( instanceAttachments, subject ) ) ) {
+            if ( subject.startsWith( '/' ) ) {
+                resolve( subject );
+            } else if ( instanceAttachments && ( Object.prototype.hasOwnProperty.call( instanceAttachments, subject ) ) ) {
                 resolve( instanceAttachments[ subject ] );
             } else if ( !store.available ) {
                 // e.g. in an online-only edit view
@@ -140,7 +142,7 @@ function getCurrentFiles() {
         }
     } );
 
-    // then get any file names of files that were loaded as DataURI and have remained unchanged (.i.e. loaded from Storage)
+    // then get any file names of files that were loaded as DataURI and have remained unchanged (i.e. loaded from Storage)
     $fileInputs.filter( '[data-loaded-file-name]' ).each( function() {
         files.push( $( this ).attr( 'data-loaded-file-name' ) );
     } );
