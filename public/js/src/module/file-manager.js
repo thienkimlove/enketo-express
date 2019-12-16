@@ -10,7 +10,9 @@ import $ from 'jquery';
 import utils from './utils';
 import { getFilename } from 'enketo-core/src/js/utils';
 import { t } from './translator';
+const URL_RE = /[a-zA-Z0-9+-.]+?:\/\//;
 let instanceAttachments;
+
 
 /**
  * Initialize the file manager .
@@ -118,7 +120,7 @@ function getCurrentFiles() {
             file = this.files[ 0 ]; // Why doesn't this fail for empty file inputs?
         } else if ( this.value ) {
             canvas = $( this ).closest( '.question' )[ 0 ].querySelector( '.draw-widget canvas' );
-            if ( canvas ) {
+            if ( canvas && !URL_RE.test( this.value ) ) {
                 // TODO: In the future, we could do canvas.toBlob()
                 file = utils.dataUriToBlobSync( canvas.toDataURL() );
                 file.name = this.value;
