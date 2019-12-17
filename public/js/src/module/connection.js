@@ -361,7 +361,7 @@ function _getExternalData( survey ) {
             } );
 
         survey.binaryDefaults = [ ...doc.querySelectorAll( 'instance:first-child > * *[src]' ) ]
-            .map( el => ( { url: el.getAttribute( 'src' ), value: el.textContent } ) );
+            .map( el => ( { src: el.getAttribute( 'src' ), url: el.textContent } ) );
 
         survey.binaryDefaults.forEach( ( obj, index ) => {
 

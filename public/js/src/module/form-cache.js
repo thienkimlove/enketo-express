@@ -153,6 +153,16 @@ function _setRepeatListener( survey ) {
 function _swapMediaSrc( survey ) {
     survey.form = survey.form.replace( /(src="[^"]*")/g, 'data-offline-$1 src=""' );
 
+    const model = new DOMParser().parseFromString( survey.model, 'text/xml' );
+    survey.binaryDefaults.forEach( obj => {
+        const node = model.querySelector( `*[src="${obj.src}"]` );
+        if ( node ) {
+            console.log( 'removing src from ', node );
+            node.removeAttribute( 'src' );
+        }
+    } );
+    survey.model = new XMLSerializer().serializeToString( model );
+
     return Promise.resolve( survey );
 }
 

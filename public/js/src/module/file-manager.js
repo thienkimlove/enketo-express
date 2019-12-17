@@ -56,6 +56,16 @@ function getFileUrl( subject ) {
             } else if ( !store.available ) {
                 // e.g. in an online-only edit view
                 reject( new Error( 'store not available' ) );
+            } else if ( URL_RE.test( subject ) ) {
+                store.survey.resource.get( settings.enketoId, subject )
+                    .then( file => {
+                        if ( file.item ) {
+                            resolve( URL.createObjectURL( file.item ) );
+                        } else {
+                            reject( new Error( 'File Retrieval Error' ) );
+                        }
+                    } )
+                    .catch( reject );
             } else {
                 // obtain file from storage
                 store.record.file.get( _getInstanceId(), subject )
