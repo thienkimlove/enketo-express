@@ -212,6 +212,14 @@ function updateMedia( survey ) {
             survey.resources = resources;
             return survey;
         } )
+        .then( survey => {
+            // The mechanism for default binary files is as follows:
+            // 1. They are stored as form resources in the resources table
+            // 2. Filemanager.getFileUrl will determine whether to load from (survey) resources of (record) files 
+            // base on the presence of an .... 
+            survey.resources = survey.resources.concat( survey.binaryDefaults );
+            return survey;
+        } )
         // store any resources that were successful
         .then( store.survey.update )
         .then( _loadMedia )

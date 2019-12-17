@@ -178,6 +178,8 @@ function _prepareFormDataArray( record ) {
         }
     } );
 
+    console.log( 'submissionFiles', submissionFiles );
+
     if ( submissionFiles.length > 0 ) {
         batches = _divideIntoBatches( sizes, maxSize );
     }
@@ -335,23 +337,45 @@ function _getExternalData( survey ) {
     const tasks = [];
 
     try {
+        // TODO: rewrite this
         doc = $.parseXML( survey.model );
 
         survey.externalData = $( doc ).find( 'instance[id][src]' ).map( ( index, el ) => ( {
             id: $( el ).attr( 'id' ),
             src: $( el ).attr( 'src' )
         } ) ).get();
+        // end of rewrite TODO
 
-        survey.externalData.forEach( ( instance, index ) => {
-            tasks.push( _getDataFile( instance.src, survey.languageMap ).then( xmlData => {
-                    instance.xml = xmlData;
-                    return instance;
+        survey.externalData
+            .forEach( ( instance, index ) => {
+                tasks.push( _getDataFile( instance.src, survey.languageMap )
+                    .then( xmlData => {
+                        instance.xml = xmlData;
+                        return instance;
+                    } )
+                    .catch( e => {
+                        survey.externalData.splice( index, 1 );
+                        // let external data files fail quietly. Rely on Enketo Core to show error.
+                        console.error( e );
+                    } ) );
+            } );
+
+        survey.binaryDefaults = [ ...doc.querySelectorAll( 'instance:first-child > * *[src]' ) ]
+            .map( el => ( { url: el.getAttribute( 'src' ), value: el.textContent } ) );
+
+        survey.binaryDefaults.forEach( ( obj, index ) => {
+
+            tasks.push( getMediaFile( obj.src )
+                .then( result => {
+                    obj.item = result.item;
+                    return obj;
                 } )
                 .catch( e => {
-                    survey.externalData.splice( index, 1 );
+                    survey.binaryDefaults.splice( index, 1 );
                     // let external data files fail quietly. Rely on Enketo Core to show error.
                     console.error( e );
                 } ) );
+
         } );
     } catch ( e ) {
         return Promise.reject( e );
