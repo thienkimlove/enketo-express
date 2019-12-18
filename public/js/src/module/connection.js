@@ -360,23 +360,6 @@ function _getExternalData( survey ) {
                     } ) );
             } );
 
-        survey.binaryDefaults = [ ...doc.querySelectorAll( 'instance:first-child > * *[src]' ) ]
-            .map( el => ( { src: el.getAttribute( 'src' ), url: el.textContent } ) );
-
-        survey.binaryDefaults.forEach( ( obj, index ) => {
-
-            tasks.push( getMediaFile( obj.src )
-                .then( result => {
-                    obj.item = result.item;
-                    return obj;
-                } )
-                .catch( e => {
-                    survey.binaryDefaults.splice( index, 1 );
-                    // let external data files fail quietly. Rely on Enketo Core to show error.
-                    console.error( e );
-                } ) );
-
-        } );
     } catch ( e ) {
         return Promise.reject( e );
     }

@@ -57,6 +57,9 @@ function getFileUrl( subject ) {
                 // e.g. in an online-only edit view
                 reject( new Error( 'store not available' ) );
             } else if ( URL_RE.test( subject ) ) {
+                // Any URL values are default binary values. These should only occur in offline-capable views,
+                // because the form cache module removed the src attributes 
+                // (which are /urls/like/this/http:// and are caught above this statement)
                 store.survey.resource.get( settings.enketoId, subject )
                     .then( file => {
                         if ( file.item ) {

@@ -153,17 +153,41 @@ function _setRepeatListener( survey ) {
 function _swapMediaSrc( survey ) {
     survey.form = survey.form.replace( /(src="[^"]*")/g, 'data-offline-$1 src=""' );
 
-    const model = new DOMParser().parseFromString( survey.model, 'text/xml' );
-    survey.binaryDefaults.forEach( obj => {
-        const node = model.querySelector( `*[src="${obj.src}"]` );
-        if ( node ) {
-            console.log( 'removing src from ', node );
-            node.removeAttribute( 'src' );
-        }
-    } );
-    survey.model = new XMLSerializer().serializeToString( model );
+    // Note that lookbehind regex is not supported across browsers: (?<!instance[^<]*)
+    //survey.model = survey.model.replace( /(src="[^"]*")/g, 'data-offline-$1 src=""' );
 
-    return Promise.resolve( survey );
+    const model = new DOMParser().parseFromString( survey.model, 'text/xml' );
+    const binaryDefaultElements = [ ...model.querySelectorAll( 'instance:first-child > * *[src]' ) ];
+    const tasks = [];
+    survey.binaryDefaults = [];
+
+    binaryDefaultElements.forEach( el => {
+        tasks.push( connection.getMediaFile( el.getAttribute( 'src' ) )
+            .then( result => {
+                // Overwrite the url to use the jr://images/img.png value. This makes the magic happen. 
+                // It causes a jr:// value to be treated the same as a filename.ext value.
+                result.url = el.textContent;
+                survey.binaryDefaults.push( result );
+                // Here we are saving the binary default resources, as they are needed to be available
+                // in the browser storage before the drawing widget (and other widgets that may support 
+                // binary defaults in the future) is initialized. They will be saved again later in the updateMedia 
+                // function together with the media labels (so this is double but this is easiest).
+                store.survey.resource.update( survey.enketoId, result );
+                // Now the src attribute should be removed because the filemanager.js can return the blob for 
+                // the jr://images/... key (as if it is a file).
+                el.removeAttribute( 'src' );
+            } )
+            .catch( e => {
+                // let files fail quietly. Rely on Enketo Core to show error.
+                console.error( e );
+            } ) );
+    } );
+
+    return Promise.all( tasks )
+        .then( () => {
+            survey.model = new XMLSerializer().serializeToString( model );
+            return survey;
+        } );
 }
 
 /**
