@@ -13,7 +13,6 @@ import { t } from './translator';
 const URL_RE = /[a-zA-Z0-9+-.]+?:\/\//;
 let instanceAttachments;
 
-
 /**
  * Initialize the file manager .
  * @return {*} promise boolean or rejection with Error

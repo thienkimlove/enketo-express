@@ -153,9 +153,6 @@ function _setRepeatListener( survey ) {
 function _swapMediaSrc( survey ) {
     survey.form = survey.form.replace( /(src="[^"]*")/g, 'data-offline-$1 src=""' );
 
-    // Note that lookbehind regex is not supported across browsers: (?<!instance[^<]*)
-    //survey.model = survey.model.replace( /(src="[^"]*")/g, 'data-offline-$1 src=""' );
-
     const model = new DOMParser().parseFromString( survey.model, 'text/xml' );
     const binaryDefaultElements = [ ...model.querySelectorAll( 'instance:first-child > * *[src]' ) ];
     const tasks = [];

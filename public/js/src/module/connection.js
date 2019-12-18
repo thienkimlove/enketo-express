@@ -178,8 +178,6 @@ function _prepareFormDataArray( record ) {
         }
     } );
 
-    console.log( 'submissionFiles', submissionFiles );
-
     if ( submissionFiles.length > 0 ) {
         batches = _divideIntoBatches( sizes, maxSize );
     }
@@ -340,10 +338,11 @@ function _getExternalData( survey ) {
         // TODO: rewrite this
         doc = $.parseXML( survey.model );
 
-        survey.externalData = $( doc ).find( 'instance[id][src]' ).map( ( index, el ) => ( {
-            id: $( el ).attr( 'id' ),
-            src: $( el ).attr( 'src' )
-        } ) ).get();
+        survey.externalData = $( doc ).find( 'instance[id][src]' )
+            .map( ( index, el ) => ( {
+                id: $( el ).attr( 'id' ),
+                src: $( el ).attr( 'src' )
+            } ) ).get();
         // end of rewrite TODO
 
         survey.externalData
