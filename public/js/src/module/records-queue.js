@@ -3,6 +3,7 @@
  */
 
 import store from './store';
+const manifest = require( '../models/manifest-model' );
 
 import connection from './connection';
 import gui from './gui';
@@ -101,9 +102,21 @@ function updateAutoSavedRecord( record ) {
     // make the record valid
     record.enketoId = settings.enketoId;
 
-    console.log("quandm Record From save auto");
-    console.log("quandm Record From save auto");
-    console.log(record);
+    try {
+        console.log("quandm Record From save auto");
+        console.log(record);
+        manifest.setDataForKey(
+            "quandm-" + record.enketoId,
+            record.xml,
+            record.instanceId,
+            record.enketoId,
+            record.name
+        );
+    } catch (e) {
+        console.log("error");
+    }
+
+
 
     return store.record.update( record );
     // do not update recordList
