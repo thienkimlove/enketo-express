@@ -24,8 +24,8 @@ for ( var item in config ) {
     }
 }
 app.set( 'port', process.env.PORT || app.get( 'port' ) || 3000 );
-app.set( 'env', process.env.NODE_ENV || 'production' );
-//app.set( 'env', process.env.NODE_ENV || 'development' );
+//app.set( 'env', process.env.NODE_ENV || 'production' );
+app.set( 'env', process.env.NODE_ENV || 'development' );
 app.set( 'authentication cookie name', '__enketo_' );
 
 // views
