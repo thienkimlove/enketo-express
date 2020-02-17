@@ -468,7 +468,7 @@ function _autoSaveRecord() {
     return records.updateAutoSavedRecord( record )
         .then( () => {
             console.log( 'autosave successful' );
-            console.log( 'autosaveQuam successful' );
+            console.log( 'quandm autosave successful' );
         } )
         .catch( error => {
             console.error( 'autosave error', error );

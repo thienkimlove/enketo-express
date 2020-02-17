@@ -101,7 +101,7 @@ function updateAutoSavedRecord( record ) {
     // make the record valid
     record.enketoId = settings.enketoId;
 
-    console.log("QuanDM Record From Autosave");
+    console.log("quandm Record From Autosave");
     console.log(record);
 
     return store.record.update( record );
