@@ -251,6 +251,7 @@ module.exports = grunt => {
     } );
 
     grunt.registerTask( 'default', [ 'locales', 'widgets', 'css', 'js-ie11', 'terser' ] );
+    grunt.registerTask( 'reload', [ 'terser'] );
     grunt.registerTask( 'locales', [ 'shell:clean-locales', 'i18next' ] );
     grunt.registerTask( 'js', [ 'shell:clean-js', 'client-config-file:create', 'widgets', 'shell:rollup' ] );
     grunt.registerTask( 'js-dev', [ 'js' ] );
