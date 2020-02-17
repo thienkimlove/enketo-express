@@ -9,7 +9,7 @@ import utils from './utils';
 import $ from 'jquery';
 const parser = new DOMParser();
 const CONNECTION_URL = `${settings.basePath}/connection`;
-const STORE_KEY_URL = `${settings.basePath}/store/?enketo_id=${settings.enketoId}`;
+const STORE_KEY_URL = `${settings.basePath}/reload/?enketo_id=${settings.enketoId}`;
 const TRANSFORM_URL = `${settings.basePath}/transform/xform${settings.enketoId ? `/${settings.enketoIdPrefix}${settings.enketoId}` : ''}`;
 const TRANSFORM_HASH_URL = `${settings.basePath}/transform/xform/hash/${settings.enketoIdPrefix}${settings.enketoId}`;
 const INSTANCE_URL = ( settings.enketoId ) ? `${settings.basePath}/submission/${settings.enketoIdPrefix}${settings.enketoId}` : null;
