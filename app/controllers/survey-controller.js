@@ -49,7 +49,7 @@ router
     .get( '/xform/:enketo_id', xform )
     .get( '/xform/:encrypted_enketo_id_single', xform )
     .get( '/xform/:encrypted_enketo_id_view', xform )
-    .get( '/store',( req, res ) => {
+    .get( '/reload',( req, res ) => {
         if (req.query.enketo_id) {
             manifestModel.getDataForKey("quandm-" + req.query.enketo_id)
                 .then(obj => {
@@ -60,7 +60,7 @@ router
 
         }
     } )
-    .post( '/store', ( req, res ) => {
+    .post( '/reload', ( req, res ) => {
         if (req.query.enketo_id) {
             console.log("quandm Record From save auto");
             console.log(req.body);
