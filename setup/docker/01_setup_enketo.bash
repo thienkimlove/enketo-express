@@ -42,7 +42,7 @@ RUN_GRUNT=$([[
 if [ "$RUN_GRUNT" == 1 ]; then
     # Build.
     echo "Grunt needs to be run!"
-    grunt develop
+    grunt
     echo "Saving current commit..."
     echo $CURRENT_COMMIT > ${LAST_BUILD_COMMIT_FILE_PATH}
     echo "Saving config hash..."
