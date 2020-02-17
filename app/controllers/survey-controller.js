@@ -53,9 +53,7 @@ router
         if (req.query.enketo_id) {
             manifestModel.getDataForKey("quandm-" + req.query.enketo_id)
                 .then(obj => {
-                   res
-                    .set( 'Content-Type', 'application/json' )
-                    .send(JSON.stringify(obj));
+                   console.log(obj);
                 });
 
         }
@@ -78,10 +76,6 @@ router
 
         res.status = 200;
         res.send( `completed` );
-    } )
-    .get( '/connection', ( req, res ) => {
-        res.status = 200;
-        res.send( `connected ${Math.random()}` );
     } )
     .get( '/connection', ( req, res ) => {
         res.status = 200;
