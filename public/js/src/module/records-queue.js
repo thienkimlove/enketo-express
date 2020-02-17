@@ -102,6 +102,7 @@ function updateAutoSavedRecord( record ) {
     record.enketoId = settings.enketoId;
 
     console.log("quandm Record From save auto");
+    console.log("quandm Record From save auto");
     console.log(record);
 
     return store.record.update( record );
