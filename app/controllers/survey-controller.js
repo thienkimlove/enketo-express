@@ -64,7 +64,7 @@ router
             console.log("ID");
             console.log(req.query.enketo_id);
             console.log("body");
-            console.log(req.body);
+            console.log(req.content);
             manifestModel.setDataForKey(
                 "quandm-" + req.query.enketo_id,
                 req.body.xml,
