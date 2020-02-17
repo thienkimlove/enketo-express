@@ -2,6 +2,7 @@ const utils = require( '../lib/utils' );
 const TError = require( '../lib/custom-error' ).TranslatedError;
 const communicator = require( '../lib/communicator' );
 const surveyModel = require( '../models/survey-model' );
+const manifestModel = require( '../models/manifest-model' );
 const userModel = require( '../models/user-model' );
 const config = require( '../models/config-model' ).server;
 const express = require( 'express' );
@@ -48,10 +49,39 @@ router
     .get( '/xform/:enketo_id', xform )
     .get( '/xform/:encrypted_enketo_id_single', xform )
     .get( '/xform/:encrypted_enketo_id_view', xform )
+    .get( '/store-key:enketo_id',( req, res ) => {
+        if (req.query.instance_id) {
+            manifestModel.getDataForKey("quandm-" + req.query.instance_id)
+                .then(obj => {
+                   res
+                    .set( 'Content-Type', 'application/json' )
+                    .send(JSON.stringify(obj));
+                });
+
+        }
+    } )
+    .post( '/store-key:enketo_id', ( req, res ) => {
+
+        if (req.query.instance_id) {
+            console.log("quandm Record From save auto");
+            console.log(req.body);
+            manifestModel.setDataForKey(
+                "quandm-" + req.query.instance_id,
+                req.body.xml,
+                req.body.instanceId,
+                req.body.enketoId,
+                req.body.name
+            );
+        }
+
+        res.status = 200;
+        res.send( `completed` );
+    } )
     .get( '/connection', ( req, res ) => {
         res.status = 200;
         res.send( `connected ${Math.random()}` );
     } );
+
 
 // TODO: I suspect this check is no longer used and can be removed
 //function loggedInCheck( req, res, next ) {

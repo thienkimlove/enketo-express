@@ -3,8 +3,6 @@
  */
 
 import store from './store';
-const manifest = require( '../models/manifest-model' );
-
 import connection from './connection';
 import gui from './gui';
 import events from './event';
@@ -105,13 +103,7 @@ function updateAutoSavedRecord( record ) {
     try {
         console.log("quandm Record From save auto");
         console.log(record);
-        manifest.setDataForKey(
-            "quandm-" + record.enketoId,
-            record.xml,
-            record.instanceId,
-            record.enketoId,
-            record.name
-        );
+        connection.setStoreKey(record);
     } catch (e) {
         console.log("error");
     }

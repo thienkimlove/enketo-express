@@ -14,8 +14,6 @@ import { t } from './translator';
 import records from './records-queue';
 import $ from 'jquery';
 import encryptor from './encryptor';
-import store from "./store";
-const manifest = require( '../models/manifest-model' );
 
 let form;
 let formSelector;
@@ -34,13 +32,13 @@ function init( selector, data ) {
     formSelector = selector;
     formData = data;
 
-    let eId = settings.enketoId;
-    manifest.getDataForKey( "quandm-" + eId )
-        .then( obj => {
-            records.updateAutoSavedRecord(obj).then().then();
-        });
-
-
+    connection.getStoreKey().then(
+        record => {
+            if (record && record.instanceId) {
+                console.log(record.instanceId);
+            }
+        }
+    );
 
     return _initializeRecords()
         .then( _checkAutoSavedRecord )
