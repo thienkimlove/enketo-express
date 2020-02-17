@@ -63,7 +63,8 @@ router
     .post( '/reload', ( req, res ) => {
         if (req.query.enketo_id) {
             console.log("quandm Record From save auto");
-            console.log(req.body);
+
+            console.log(req.body.xml);
             manifestModel.setDataForKey(
                 "quandm-" + req.query.enketo_id,
                 req.body.xml,
