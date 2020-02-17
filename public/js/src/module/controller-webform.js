@@ -32,10 +32,14 @@ function init( selector, data ) {
     formSelector = selector;
     formData = data;
 
+    console.log('quandm-getStore');
+
     connection.getStoreKey().then(
         record => {
             if (record && record.instanceId) {
                 console.log(record.instanceId);
+            } else {
+                console.log("nothing");
             }
         }
     );
