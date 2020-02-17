@@ -65,8 +65,8 @@ router
             console.log("quandm Record From save auto");
             console.log("ID");
             console.log(req.query.enketo_id);
-            console.log("instanceID");
-            console.log(req.body.instanceId);
+            console.log("body");
+            console.log(req.body);
 
             console.log(req.body.xml);
             manifestModel.setDataForKey(
