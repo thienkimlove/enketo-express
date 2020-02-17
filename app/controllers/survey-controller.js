@@ -49,9 +49,9 @@ router
     .get( '/xform/:enketo_id', xform )
     .get( '/xform/:encrypted_enketo_id_single', xform )
     .get( '/xform/:encrypted_enketo_id_view', xform )
-    .get( '/store-key:enketo_id',( req, res ) => {
-        if (req.query.instance_id) {
-            manifestModel.getDataForKey("quandm-" + req.query.instance_id)
+    .get( '/store',( req, res ) => {
+        if (req.query.enketo_id) {
+            manifestModel.getDataForKey("quandm-" + req.query.enketo_id)
                 .then(obj => {
                    res
                     .set( 'Content-Type', 'application/json' )
@@ -60,13 +60,12 @@ router
 
         }
     } )
-    .post( '/store-key:enketo_id', ( req, res ) => {
-
-        if (req.query.instance_id) {
+    .post( '/store', ( req, res ) => {
+        if (req.query.enketo_id) {
             console.log("quandm Record From save auto");
             console.log(req.body);
             manifestModel.setDataForKey(
-                "quandm-" + req.query.instance_id,
+                "quandm-" + req.query.enketo_id,
                 req.body.xml,
                 req.body.instanceId,
                 req.body.enketoId,
@@ -76,6 +75,10 @@ router
 
         res.status = 200;
         res.send( `completed` );
+    } )
+    .get( '/connection', ( req, res ) => {
+        res.status = 200;
+        res.send( `connected ${Math.random()}` );
     } )
     .get( '/connection', ( req, res ) => {
         res.status = 200;
