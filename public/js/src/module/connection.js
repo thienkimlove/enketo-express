@@ -43,7 +43,7 @@ function setStoreKey( recordData ) {
             type: 'POST',
             data: recordData,
             cache: false,
-            contentType: false,
+            contentType: 'json',
             processData: false,
             timeout: settings.timeout
         } )
