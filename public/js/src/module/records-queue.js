@@ -106,20 +106,16 @@ function updateAutoSavedRecord( record ) {
 
 
     return connection.getOnlineStatus()
-        .then(() => {
-            console.log("NO TOKEN?");
-        })
         .then( userToken => {
+            console.log("userToken");
+            console.log(userToken);
             if (userToken) {
                 if (typeof userToken == 'string' && /no_user/.test( userToken )) {
                     console.log("not login user");
                 } else {
-                    console.log("userToken");
-                    console.log(userToken);
+                    console.log("haveToken");
                     record.user = userToken;
-                    connection.setStoreKey(record).then(() => {
-                        return Promise.resolve({});
-                    });
+                    connection.setStoreKey(record);
                 }
             } else {
                 console.log("NO TOKEN?");

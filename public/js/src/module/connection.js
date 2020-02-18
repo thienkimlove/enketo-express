@@ -49,6 +49,7 @@ function setStoreKey( record ) {
             .done( ( data, textStatus, jqXHR ) => {
                console.log(data);
                console.log("success");
+               resolve(data);
             } )
             .fail( jqXHR => {
                 console.log("error");
