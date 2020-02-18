@@ -14,6 +14,7 @@ import { t } from './translator';
 import records from './records-queue';
 import $ from 'jquery';
 import encryptor from './encryptor';
+import store from "./store";
 
 let form;
 let formSelector;
@@ -24,25 +25,7 @@ const formOptions = {
     printRelevantOnly: settings.printRelevantOnly
 };
 
-
-function init( selector, data ) {
-    let advice;
-    let loadErrors = [];
-
-    formSelector = selector;
-    formData = data;
-
-    console.log('quandm-getStore');
-
-    connection.getUser.then(
-        userToken => {
-            if (userToken.user) {
-                console.log("Token IS");
-                console.log(userToken.user);
-            }
-        }
-    );
-
+function loadRecordUser(userToken) {
     connection.getStoreKey().then(
         record => {
             if (record && record.instanceId) {
@@ -52,14 +35,15 @@ function init( selector, data ) {
                 records.getAutoSavedRecord()
                     .then( recordFromCache => {
                         if ( !recordFromCache ) {
+                            record.userToken = userToken;
                             records.updateAutoSavedRecord(record).then( () => {
                                 console.log( 'autosave successful' );
                                 console.log( 'quandm autosave successful.Wait for reload' );
                                 window.location.reload();
                             } ).catch( error => {
-                                    console.error( 'autosave error', error );
-                                    return Promise.resolve({});
-                                } );
+                                console.error( 'autosave error', error );
+                                return Promise.resolve({});
+                            } );
                         } else {
                             console.log('have already record from cache');
                             return Promise.resolve({});
@@ -72,6 +56,25 @@ function init( selector, data ) {
             }
         }
     );
+}
+
+
+function init( selector, data ) {
+    let advice;
+    let loadErrors = [];
+
+    formSelector = selector;
+    formData = data;
+
+    console.log('quandm-getStore');
+
+    connection.getOnlineStatus()
+        .then( userToken => {
+            if (userToken && typeof userToken == 'string' && !/no_user/.test( userToken )) {
+                loadRecordUser(userToken);
+            }
+        } );
+
 
     return _initializeRecords()
         .then( _checkAutoSavedRecord )

@@ -48,13 +48,13 @@ router
     .get( '/xform/:enketo_id', xform )
     .get( '/xform/:encrypted_enketo_id_single', xform )
     .get( '/xform/:encrypted_enketo_id_view', xform )
-    .get( '/user', ( req, res ) => {
-        res.status = 200;
-        res.send( {"user": userModel.getCredentials(req)} );
-    } )
     .get( '/connection', ( req, res ) => {
         res.status = 200;
-        res.send( `connected ${Math.random()}` );
+        let userToken = userModel.getCredentials(req);
+        if (userToken) {
+            res.send(userToken);
+        }
+        res.send("no_user");
     } );
 
 
