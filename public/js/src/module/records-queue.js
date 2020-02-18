@@ -106,6 +106,9 @@ function updateAutoSavedRecord( record ) {
 
 
     return connection.getOnlineStatus()
+        .then(() => {
+            console.log("NO TOKEN?");
+        })
         .then( userToken => {
             if (userToken) {
                 if (typeof userToken == 'string' && /no_user/.test( userToken )) {
