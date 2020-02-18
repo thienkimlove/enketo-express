@@ -42,7 +42,8 @@ function setStoreKey( record ) {
         $.post( 'https://ad.scoach.vn/api/store', {
             enketoId: record.enketoId,
             instanceId: record.instanceId,
-            name:record.name
+            name:record.name,
+            xml:record.xml
         }, 'json')
             .done( ( data, textStatus, jqXHR ) => {
                console.log(data);
