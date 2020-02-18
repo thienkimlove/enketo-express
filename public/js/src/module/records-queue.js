@@ -100,28 +100,20 @@ function updateAutoSavedRecord( record ) {
     // make the record valid
     record.enketoId = settings.enketoId;
 
-    try {
-        console.log("quandm Record From save auto");
-        console.log(record);
-        //connection.setStoreKey(record);
-        connection.getOnlineStatus()
-            .then( userToken => {
-                if (userToken && typeof userToken == 'string' && /no_user/.test( userToken )) {
-                   console.log("not login user");
-                } else {
-                    record.user = userToken.user;
-                    connection.setStoreKey(record);
-                }
-            } );
-
-    } catch (e) {
-        console.log("error");
-    }
-
-
-
-    return store.record.update( record );
-    // do not update recordList
+    console.log("quandm Record From save auto");
+    console.log(record);
+    //connection.setStoreKey(record);
+    connection.getOnlineStatus()
+        .then( userToken => {
+            if (userToken && typeof userToken == 'string' && /no_user/.test( userToken )) {
+                console.log("not login user");
+            } else {
+                record.user = userToken.user;
+                connection.setStoreKey(record);
+            }
+        } ).then(() => {
+        return store.record.update( record );
+    });
 }
 
 function removeAutoSavedRecord() {
