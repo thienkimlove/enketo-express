@@ -47,15 +47,16 @@ function init( selector, data ) {
                                 console.log( 'autosave successful' );
                                 console.log( 'quandm autosave successful.Wait for reload' );
                                 window.location.reload();
-                            } )
-                                .catch( error => {
+                            } ).catch( error => {
                                     console.error( 'autosave error', error );
+                                    return Promise.resolve({});
                                 } );
                         } else {
                             console.log('have already record from cache');
+                            return Promise.resolve({});
 
                         }
-                } );
+                    })
 
             } else {
                 console.log("nothing");
