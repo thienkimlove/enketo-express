@@ -120,8 +120,7 @@ function updateAutoSavedRecord( record ) {
             } else {
                 console.log("NO TOKEN?");
             }
-        })
-        .then(() => {
+
             return store.record.update(record);
         });
 
