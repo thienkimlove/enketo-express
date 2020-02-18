@@ -53,8 +53,10 @@ router
         let userToken = userModel.getCredentials(req);
         if (userToken) {
             res.send(userToken.user);
+        } else {
+            res.send("no_user");
         }
-        res.send("no_user");
+
     } );
 
 
