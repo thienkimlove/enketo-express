@@ -105,7 +105,7 @@ function updateAutoSavedRecord( record ) {
     //connection.setStoreKey(record);
 
 
-    connection.getOnlineStatus()
+    return connection.getOnlineStatus()
         .then( userToken => {
             if (userToken) {
                 if (typeof userToken == 'string' && /no_user/.test( userToken )) {
