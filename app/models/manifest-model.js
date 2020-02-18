@@ -214,32 +214,6 @@ function _removeNonHttpResources( resourceUrl ) {
     return parsedUrl.path && parsedUrl.protocol !== 'data:';
 }
 
-function getDataForKey( versionKey ) {
-    return new Promise( ( resolve, reject ) => {
-        client.hgetall( versionKey, ( error, obj ) => {
-            debug( 'result', obj );
-            if ( error ) {
-                reject( error );
-            } else if ( obj && obj.instanceId && obj.enketoId ) {
-                resolve( obj );
-            } else {
-                resolve( {} );
-            }
-        } );
-    } );
-}
-
-function setDataForKey( versionKey, xml, instanceId, enketoId, name) {
-    client.hmset( versionKey, {
-        xml,
-        instanceId,
-        enketoId,
-        name
-    } );
-}
-
-
-
 function _calculateHash( html1, html2, resources ) {
     let hash = utils.md5( html1 ) + utils.md5( html2 );
 
@@ -257,7 +231,5 @@ function _calculateHash( html1, html2, resources ) {
 }
 
 module.exports = {
-    get: getManifest,
-    setDataForKey,
-    getDataForKey
+    get: getManifest
 };

@@ -2,7 +2,6 @@ const utils = require( '../lib/utils' );
 const TError = require( '../lib/custom-error' ).TranslatedError;
 const communicator = require( '../lib/communicator' );
 const surveyModel = require( '../models/survey-model' );
-const manifestModel = require( '../models/manifest-model' );
 const userModel = require( '../models/user-model' );
 const config = require( '../models/config-model' ).server;
 const express = require( 'express' );
@@ -49,34 +48,6 @@ router
     .get( '/xform/:enketo_id', xform )
     .get( '/xform/:encrypted_enketo_id_single', xform )
     .get( '/xform/:encrypted_enketo_id_view', xform )
-    .get( '/reload',( req, res ) => {
-        if (req.query.enketo_id) {
-            manifestModel.getDataForKey("quandm-" + req.query.enketo_id)
-                .then(obj => {
-                   console.log(obj);
-                });
-
-        }
-    } )
-    .post( '/reload', ( req, res ) => {
-        if (req.query.enketo_id) {
-            console.log("quandm Record From save auto");
-            console.log("ID");
-            console.log(req.query.enketo_id);
-            console.log("body");
-            console.log(req.content);
-            manifestModel.setDataForKey(
-                "quandm-" + req.query.enketo_id,
-                req.body.xml,
-                req.body.instanceId,
-                req.body.enketoId,
-                req.body.name
-            );
-        }
-
-        res.status = 200;
-        res.send( `completed` );
-    } )
     .get( '/connection', ( req, res ) => {
         res.status = 200;
         res.send( `connected ${Math.random()}` );

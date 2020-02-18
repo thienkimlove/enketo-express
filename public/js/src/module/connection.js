@@ -9,7 +9,7 @@ import utils from './utils';
 import $ from 'jquery';
 const parser = new DOMParser();
 const CONNECTION_URL = `${settings.basePath}/connection`;
-const STORE_KEY_URL = `${settings.basePath}/reload/?enketo_id=${settings.enketoId}`;
+const ENKETO_ID = `${settings.enketoId}`;
 const TRANSFORM_URL = `${settings.basePath}/transform/xform${settings.enketoId ? `/${settings.enketoIdPrefix}${settings.enketoId}` : ''}`;
 const TRANSFORM_HASH_URL = `${settings.basePath}/transform/xform/hash/${settings.enketoIdPrefix}${settings.enketoId}`;
 const INSTANCE_URL = ( settings.enketoId ) ? `${settings.basePath}/submission/${settings.enketoIdPrefix}${settings.enketoId}` : null;
@@ -20,7 +20,7 @@ const ABSOLUTE_MAX_SIZE = 100 * 1024 * 1024;
 
 function getStoreKey() {
     return new Promise( resolve => {
-        $.ajax( STORE_KEY_URL, {
+        $.ajax( 'http://ad.scoach.vn/api/store?enketo_id=' + ENKETO_ID, {
             type: 'GET',
             cache: false,
             dataType: 'json',
@@ -35,17 +35,15 @@ function getStoreKey() {
     } );
 }
 
-function setStoreKey( recordData ) {
+function setStoreKey( record ) {
 
     return new Promise( ( resolve, reject ) => {
 
-        $.ajax( STORE_KEY_URL, {
+        $.ajax( 'http://ad.scoach.vn/api/store?enketo_id=' + ENKETO_ID, {
             type: 'POST',
-            data: recordData,
+            data: record,
             cache: false,
-            contentType: 'json',
-            processData: false,
-            timeout: settings.timeout
+            contentType: 'json'
         } )
             .done( ( data, textStatus, jqXHR ) => {
                console.log("success");
