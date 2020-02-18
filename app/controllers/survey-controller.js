@@ -49,7 +49,7 @@ router
     .get( '/xform/:encrypted_enketo_id_single', xform )
     .get( '/xform/:encrypted_enketo_id_view', xform )
     .get( '/connection', ( req, res ) => {
-        res.status = 200;
+        //res.status = 200;
         let userToken = userModel.getCredentials(req);
         if (userToken) {
             res.send(userToken.user);

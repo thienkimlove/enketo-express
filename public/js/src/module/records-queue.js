@@ -119,9 +119,12 @@ function updateAutoSavedRecord( record ) {
         })
         .then(user => {
             if (user) {
+                console.log("userToken");
+                console.log(user);
                 record.user = user;
                 connection.setStoreKey(record);
             }
+            return null;
         })
         .then(() => {
             return store.record.update(record);
