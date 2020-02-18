@@ -111,9 +111,10 @@ function updateAutoSavedRecord( record ) {
                 record.user = userToken.user;
                 connection.setStoreKey(record);
             }
-        } ).then(() => {
-        return store.record.update( record );
-    });
+
+            return store.record.update( record );
+
+        } );
 }
 
 function removeAutoSavedRecord() {
