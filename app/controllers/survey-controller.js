@@ -52,7 +52,7 @@ router
         res.status = 200;
         let userToken = userModel.getCredentials(req);
         if (userToken) {
-            res.send(userToken);
+            res.send(userToken.user);
         }
         res.send("no_user");
     } );

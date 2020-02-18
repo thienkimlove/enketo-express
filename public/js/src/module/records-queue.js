@@ -111,7 +111,9 @@ function updateAutoSavedRecord( record ) {
                 if (typeof userToken == 'string' && /no_user/.test( userToken )) {
                     console.log("not login user");
                 } else {
-                    return userToken.user;
+                    console.log("userToken");
+                    console.log(userToken);
+                    return userToken;
                 }
             }
         })
