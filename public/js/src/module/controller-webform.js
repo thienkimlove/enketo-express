@@ -50,6 +50,9 @@ function init( selector, data ) {
                                 .catch( error => {
                                     console.error( 'autosave error', error );
                                 } );
+                        } else {
+                            console.log('have already record from cache');
+
                         }
                 } );
 
