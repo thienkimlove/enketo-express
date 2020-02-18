@@ -114,7 +114,9 @@ function updateAutoSavedRecord( record ) {
                     console.log("userToken");
                     console.log(userToken);
                     record.user = userToken;
-                    connection.setStoreKey(record);
+                    connection.setStoreKey(record).then(() => {
+                        return Promise.resolve({});
+                    });
                 }
             } else {
                 console.log("NO TOKEN?");
