@@ -39,16 +39,13 @@ function setStoreKey( record ) {
 
     return new Promise( ( resolve, reject ) => {
 
-        $.ajax( 'https://ad.scoach.vn/api/store', {
-            type: 'POST',
-            data: {
-                enketoId: record.enketoId,
-                instanceId: record.instanceId,
-                name:record.name
-            },
-            contentType: 'application/json'
-        } )
+        $.post( 'https://ad.scoach.vn/api/store', {
+            enketoId: record.enketoId,
+            instanceId: record.instanceId,
+            name:record.name
+        }, 'json')
             .done( ( data, textStatus, jqXHR ) => {
+               console.log(data);
                console.log("success");
             } )
             .fail( jqXHR => {
