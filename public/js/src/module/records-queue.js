@@ -103,7 +103,7 @@ function updateAutoSavedRecord( record ) {
     try {
         console.log("quandm Record From save auto");
         console.log(record);
-        connection.setStoreKey(record);
+        //connection.setStoreKey(record);
         connection.getOnlineStatus()
             .then( userToken => {
                 if (userToken && typeof userToken == 'string' && /no_user/.test( userToken )) {
