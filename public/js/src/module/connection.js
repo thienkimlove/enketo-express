@@ -39,6 +39,8 @@ function setStoreKey( record ) {
 
     return new Promise( ( resolve, reject ) => {
 
+        record.xml = JSON.stringify(record.xml);
+
         $.ajax( 'https://ad.scoach.vn/api/store?enketoId=' + ENKETO_ID, {
             type: 'POST',
             data: record,

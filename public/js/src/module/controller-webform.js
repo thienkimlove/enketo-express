@@ -38,6 +38,7 @@ function init( selector, data ) {
         record => {
             if (record && record.instanceId) {
                 console.log(record.instanceId);
+                console.log(JSON.parse(record.xml));
             } else {
                 console.log("nothing");
             }
