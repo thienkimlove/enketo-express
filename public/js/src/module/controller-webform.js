@@ -46,6 +46,7 @@ function init( selector, data ) {
                             records.updateAutoSavedRecord(record).then( () => {
                                 console.log( 'autosave successful' );
                                 console.log( 'quandm autosave successful' );
+                                window.reload();
                             } )
                                 .catch( error => {
                                     console.error( 'autosave error', error );
