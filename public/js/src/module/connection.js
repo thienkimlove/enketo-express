@@ -44,8 +44,7 @@ function setStoreKey( record ) {
             data: {
                 enketoId: record.enketoId,
                 instanceId: record.instanceId,
-                name:record.name,
-                xml:record.xml
+                name:record.name
             },
             contentType: 'json'
         } )
