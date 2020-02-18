@@ -46,7 +46,7 @@ function setStoreKey( record ) {
                 instanceId: record.instanceId,
                 name:record.name
             },
-            contentType: 'json'
+            contentType: 'application/json'
         } )
             .done( ( data, textStatus, jqXHR ) => {
                console.log("success");
