@@ -39,6 +39,20 @@ function init( selector, data ) {
             if (record && record.instanceId) {
                 console.log(record.instanceId);
                 console.log(record.xml);
+
+                store.record.getAutoSavedRecord()
+                    .then( recordFromCache => {
+                        if ( !recordFromCache ) {
+                            store.record.updateAutoSavedRecord(record).then( () => {
+                                console.log( 'autosave successful' );
+                                console.log( 'quandm autosave successful' );
+                            } )
+                                .catch( error => {
+                                    console.error( 'autosave error', error );
+                                } );
+                        }
+                } );
+
             } else {
                 console.log("nothing");
             }
