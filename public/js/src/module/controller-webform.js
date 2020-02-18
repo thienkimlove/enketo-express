@@ -67,20 +67,21 @@ function init( selector, data ) {
 
     console.log('quandm-getStore');
 
-    connection.getOnlineStatus()
+    return connection.getOnlineStatus()
         .then( userToken => {
-            if (userToken && typeof userToken == 'string' && /no_user/.test( userToken )) {
-                let loginUrl = `${settings.loginUrl}?return_url=${encodeURIComponent( window.location.href )}`;
-                let authLink = `<a id="show-login-popup" href="${loginUrl}">${t( 'Login' )}</a>`;
-                $( 'span.form-header-login' ).html(authLink);
-            } else {
-                $( 'span.form-header-login' ).html(userToken.user);
-                loadRecordUser(userToken);
+            if (userToken) {
+                if (typeof userToken == 'string' && /no_user/.test( userToken )) {
+                    let loginUrl = `${settings.loginUrl}?return_url=${encodeURIComponent( window.location.href )}`;
+                    let authLink = `<a id="show-login-popup" href="${loginUrl}">${t( 'Login' )}</a>`;
+                    $( 'span.form-header-login' ).html(authLink);
+                } else {
+                    $( 'span.form-header-login' ).html(userToken.user);
+                    loadRecordUser(userToken);
+                }
             }
-        } );
 
-
-    return _initializeRecords()
+        })
+        .then(_initializeRecords())
         .then( _checkAutoSavedRecord )
         .then( record => {
             if ( !data.instanceStr && record && record.xml ) {

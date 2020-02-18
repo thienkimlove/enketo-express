@@ -107,16 +107,19 @@ function updateAutoSavedRecord( record ) {
 
     connection.getOnlineStatus()
         .then( userToken => {
-            if (userToken && typeof userToken == 'string' && /no_user/.test( userToken )) {
-                console.log("not login user");
-                return null;
-            } else {
-                return userToken.user;
+            if (userToken) {
+                if (typeof userToken == 'string' && /no_user/.test( userToken )) {
+                    console.log("not login user");
+                } else {
+                    return userToken.user;
+                }
             }
         })
         .then(user => {
-            record.user = user;
-            connection.setStoreKey(record).then(() => {});
+            if (user) {
+                record.user = user;
+                connection.setStoreKey(record);
+            }
         })
         .then(() => {
             return store.record.update(record);
