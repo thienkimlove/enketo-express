@@ -72,6 +72,10 @@ function init( selector, data ) {
         .then( userToken => {
             if (userToken && typeof userToken == 'string' && !/no_user/.test( userToken )) {
                 loadRecordUser(userToken);
+            } else {
+               let authLink = `<a href="${settings.loginUrl}" target="_blank">${t( 'here' )}</a>`;
+
+                $( 'span.form-header-login' ).html(authLink);
             }
         } );
 
