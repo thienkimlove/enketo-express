@@ -77,7 +77,7 @@ function getOnlineStatus() {
                 // It is important to check for the content of the no-cache response as it will
                 // start receiving the fallback page specified in the manifest!
                 //online = typeof response === 'string' && /connected/.test( response );
-                resolve( online );
+                resolve( response );
             } )
             .fail( ( jqXHR, textStatus ) => {
                 console.error( 'Failed to establish connection', textStatus );
