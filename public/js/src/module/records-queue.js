@@ -103,18 +103,27 @@ function updateAutoSavedRecord( record ) {
     console.log("quandm Record From save auto");
     console.log(record);
     //connection.setStoreKey(record);
+
+    let user;
+
     connection.getOnlineStatus()
         .then( userToken => {
             if (userToken && typeof userToken == 'string' && /no_user/.test( userToken )) {
                 console.log("not login user");
+                resolve(null);
             } else {
-                record.user = userToken.user;
-                connection.setStoreKey(record);
+                resolve(user);
             }
-
-            return store.record.update( record );
-
-        } );
+        }).then(user => {
+            if (user) {
+                record.user = user;
+                connection.setStoreKey(record).then(() => {
+                    resolve(null);
+                });
+            }
+    }).then(() => {
+        return store.record.update(record);
+    });
 }
 
 function removeAutoSavedRecord() {
