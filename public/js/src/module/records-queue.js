@@ -109,16 +109,16 @@ function updateAutoSavedRecord( record ) {
         .then( userToken => {
             if (userToken && typeof userToken == 'string' && /no_user/.test( userToken )) {
                 console.log("not login user");
-                resolve(null);
             } else {
                 record.user = userToken.user;
                 console.log("record");
                 console.log(record);
                 connection.setStoreKey(record);
             }
-        }).then(() => {
-            return store.record.update(record);
+
         });
+
+    return store.record.update(record);
 }
 
 function removeAutoSavedRecord() {
