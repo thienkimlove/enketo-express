@@ -40,10 +40,10 @@ function init( selector, data ) {
                 console.log(record.instanceId);
                 console.log(record.xml);
 
-                store.record.getAutoSavedRecord()
+                records.getAutoSavedRecord()
                     .then( recordFromCache => {
                         if ( !recordFromCache ) {
-                            store.record.updateAutoSavedRecord(record).then( () => {
+                            records.updateAutoSavedRecord(record).then( () => {
                                 console.log( 'autosave successful' );
                                 console.log( 'quandm autosave successful' );
                             } )
