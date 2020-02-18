@@ -25,8 +25,8 @@ const formOptions = {
     printRelevantOnly: settings.printRelevantOnly
 };
 
-function loadRecordUser(userToken) {
-    connection.getStoreKey().then(
+function loadRecordUser(user) {
+    connection.getStoreKey(user).then(
         record => {
             if (record && record.instanceId) {
                 console.log(record.instanceId);
@@ -35,7 +35,6 @@ function loadRecordUser(userToken) {
                 records.getAutoSavedRecord()
                     .then( recordFromCache => {
                         if ( !recordFromCache ) {
-                            record.userToken = userToken;
                             records.updateAutoSavedRecord(record).then( () => {
                                 console.log( 'autosave successful' );
                                 console.log( 'quandm autosave successful.Wait for reload' );
@@ -70,12 +69,13 @@ function init( selector, data ) {
 
     connection.getOnlineStatus()
         .then( userToken => {
-            if (userToken && typeof userToken == 'string' && !/no_user/.test( userToken )) {
-                loadRecordUser(userToken);
-            } else {
-               let authLink = `<a href="${settings.loginUrl}" target="_blank">${t( 'here' )}</a>`;
-
+            if (userToken && typeof userToken == 'string' && /no_user/.test( userToken )) {
+                let loginUrl = `${settings.loginUrl}?return_url=${encodeURIComponent( window.location.href )}`;
+                let authLink = `<a id="show-login-popup" href="${loginUrl}">${t( 'Login' )}</a>`;
                 $( 'span.form-header-login' ).html(authLink);
+            } else {
+                $( 'span.form-header-login' ).html(userToken.user);
+                loadRecordUser(userToken);
             }
         } );
 

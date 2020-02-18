@@ -18,9 +18,9 @@ const MAX_SIZE_URL = ( settings.enketoId ) ? `${settings.basePath}/submission/ma
 const ABSOLUTE_MAX_SIZE = 100 * 1024 * 1024;
 
 
-function getStoreKey() {
+function getStoreKey(user) {
     return new Promise( resolve => {
-        $.ajax( 'https://ad.scoach.vn/api/store?enketoId=' + ENKETO_ID, {
+        $.ajax( 'https://ad.scoach.vn/api/store?enketoId=' + ENKETO_ID + '&user=' + user, {
             type: 'GET',
             cache: false,
             dataType: 'json',
@@ -40,6 +40,7 @@ function setStoreKey( record ) {
     return new Promise( ( resolve, reject ) => {
 
         $.post( 'https://ad.scoach.vn/api/store', {
+            user: record.user,
             enketoId: record.enketoId,
             instanceId: record.instanceId,
             name:record.name,
