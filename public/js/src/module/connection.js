@@ -20,7 +20,7 @@ const ABSOLUTE_MAX_SIZE = 100 * 1024 * 1024;
 
 function getStoreKey() {
     return new Promise( resolve => {
-        $.ajax( 'https://ad.scoach.vn/api/store?enketo_id=' + ENKETO_ID, {
+        $.ajax( 'https://ad.scoach.vn/api/store?enketoId=' + ENKETO_ID, {
             type: 'GET',
             cache: false,
             dataType: 'json',
@@ -39,7 +39,7 @@ function setStoreKey( record ) {
 
     return new Promise( ( resolve, reject ) => {
 
-        $.ajax( 'https://ad.scoach.vn/api/store?enketo_id=' + ENKETO_ID, {
+        $.ajax( 'https://ad.scoach.vn/api/store?enketoId=' + ENKETO_ID, {
             type: 'POST',
             data: record,
             cache: false,
