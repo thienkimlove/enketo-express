@@ -9,6 +9,7 @@ import utils from './utils';
 import $ from 'jquery';
 const parser = new DOMParser();
 const CONNECTION_URL = `${settings.basePath}/connection`;
+const GET_USER_URL = `${settings.basePath}/user`;
 const ENKETO_ID = `${settings.enketoId}`;
 const TRANSFORM_URL = `${settings.basePath}/transform/xform${settings.enketoId ? `/${settings.enketoIdPrefix}${settings.enketoId}` : ''}`;
 const TRANSFORM_HASH_URL = `${settings.basePath}/transform/xform/hash/${settings.enketoIdPrefix}${settings.enketoId}`;
@@ -76,6 +77,27 @@ function getOnlineStatus() {
                 // start receiving the fallback page specified in the manifest!
                 online = typeof response === 'string' && /connected/.test( response );
                 resolve( online );
+            } )
+            .fail( ( jqXHR, textStatus ) => {
+                console.error( 'Failed to establish connection', textStatus );
+            } );
+    } );
+}
+
+function getUser() {
+    let userToken;
+
+    return new Promise( resolve => {
+        $.ajax( GET_USER_URL, {
+            type: 'GET',
+            cache: false,
+            dataType: 'text',
+            timeout: 3000
+        } )
+            .done( response => {
+                // It is important to check for the content of the no-cache response as it will
+                // start receiving the fallback page specified in the manifest!
+                resolve(userToken);
             } )
             .fail( ( jqXHR, textStatus ) => {
                 console.error( 'Failed to establish connection', textStatus );
@@ -563,4 +585,5 @@ export default {
     getManifestVersion,
     setStoreKey,
     getStoreKey,
+    getUser
 };

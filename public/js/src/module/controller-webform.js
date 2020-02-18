@@ -34,6 +34,15 @@ function init( selector, data ) {
 
     console.log('quandm-getStore');
 
+    connection.getUser.then(
+        userToken => {
+            if (userToken.user) {
+                console.log("Token IS");
+                console.log(userToken.user);
+            }
+        }
+    );
+
     connection.getStoreKey().then(
         record => {
             if (record && record.instanceId) {
