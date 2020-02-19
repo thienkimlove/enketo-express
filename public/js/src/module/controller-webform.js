@@ -52,7 +52,7 @@ function loadRecordUser(user) {
         }}).then( () => {
             console.log( 'Save successful' );
             //window.location.reload();
-            resolve(1);
+            return Promise.resolve(1);
         }).catch( error => {
             console.error( 'save error', error );
             return Promise.resolve({});
@@ -76,18 +76,20 @@ function init( selector, data ) {
                     let loginUrl = `${settings.loginUrl}?return_url=${encodeURIComponent( window.location.href )}`;
                     let authLink = `<a id="show-login-popup" href="${loginUrl}">${t( 'Login' )}</a>`;
                     $( 'span.form-header-login' ).html(authLink);
+                    return Promise.resolve();
                 } else {
                     let logoutLink = `Welcome, <b>${userToken}. </b><a id="click-logout" href="javascript:void(0)">${t( 'Logout' )}</a>`;
                     $( 'span.form-header-login' ).html(logoutLink);
                     return loadRecordUser(userToken);
                 }
+            } else {
+                return Promise.resolve();
             }
-            return Promise.resolve();
 
         })
         .then((isReload) => {
             console.log("We get isReload=" + isReload);
-            if (isReload === 1) {
+            if (isReload) {
                 window.location.reload();
             }
             return _initializeRecords();
