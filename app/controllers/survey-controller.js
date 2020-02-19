@@ -49,7 +49,7 @@ router
     .get( '/xform/:encrypted_enketo_id_single', xform )
     .get( '/xform/:encrypted_enketo_id_view', xform )
     .get( '/q_logout', (req, res) => {
-        userModel.clearCredentials(req);
+        res.clearCookie(req.app.get( 'authentication cookie name'));
         res.send('done');
     })
     .get( '/q_user', ( req, res ) => {
