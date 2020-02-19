@@ -52,7 +52,7 @@ function loadRecordUser(user) {
         }}).then( () => {
             console.log( 'Save successful' );
             //window.location.reload();
-            return Promise.resolve(1);
+            resolve(1);
         }).catch( error => {
             console.error( 'save error', error );
             return Promise.resolve({});
