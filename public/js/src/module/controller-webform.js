@@ -75,7 +75,7 @@ function init( selector, data ) {
                     let authLink = `<a id="show-login-popup" href="${loginUrl}">${t( 'Login' )}</a>`;
                     $( 'span.form-header-login' ).html(authLink);
                 } else {
-                    $( 'span.form-header-login' ).html(userToken.user);
+                    $( 'span.form-header-login' ).html(userToken);
                     loadRecordUser(userToken);
                 }
             }
