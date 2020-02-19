@@ -33,7 +33,7 @@ function clearCredentials(req) {
     const authType = auth.type.toLowerCase();
 
     if ( authType === 'basic' ) {
-        req.clearCookie(req.app.get( 'authentication cookie name'));
+        req.cookie(req.app.get( 'authentication cookie name'), '', { expires: new Date(1), path: '/' });
     }
 }
 
