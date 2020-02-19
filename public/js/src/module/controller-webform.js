@@ -49,10 +49,12 @@ function loadRecordUser(user) {
         } else {
             console.log('have already auto save record from cache or mongo=null');
             return Promise.resolve();
-        }}).then( () => {
-            console.log( 'Save successful' );
+        }}).then( (resultUpdate) => {
+            if (resultUpdate) {
+                console.log( 'Save successful' );
+                window.location.reload();
+            }
             //window.location.reload();
-            return 1;
         }).catch( error => {
             console.error( 'save error', error );
             return Promise.resolve({});
@@ -87,11 +89,7 @@ function init( selector, data ) {
             }
 
         })
-        .then((isReload) => {
-            console.log("We get isReload=" + isReload);
-            if (isReload) {
-                window.location.reload();
-            }
+        .then(() => {
             return _initializeRecords();
         })
         .then( () => {
