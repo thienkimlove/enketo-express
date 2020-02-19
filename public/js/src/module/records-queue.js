@@ -100,31 +100,31 @@ function updateAutoSavedRecord( record ) {
     // make the record valid
     record.enketoId = settings.enketoId;
 
-    console.log("quandm Record From save auto");
-    console.log(record);
-    //connection.setStoreKey(record);
+    console.log("Record From save auto");
 
-
-    return connection.getOnlineStatus()
-        .then( userToken => {
-            console.log("userToken");
-            console.log(userToken);
-            if (userToken) {
-                if (typeof userToken == 'string' && /no_user/.test( userToken )) {
-                    console.log("not login user");
+    if (!record.isMongo) {
+        return connection.getUser()
+            .then( userToken => {
+                console.log("userToken");
+                if (userToken) {
+                    if (typeof userToken == 'string' && /no_user/.test( userToken )) {
+                        console.log("not login user");
+                    } else {
+                        console.log("haveToken");
+                        record.user = userToken;
+                        return connection.setStoreKey(record);
+                    }
                 } else {
-                    console.log("haveToken");
-                    record.user = userToken;
-                    return connection.setStoreKey(record);
+                    console.log("NO TOKEN?");
                 }
-            } else {
-                console.log("NO TOKEN?");
                 return Promise.resolve();
-            }
-        }).then(() => {
-            return store.record.update(record);
-        });
-
+            }).then(() => {
+                return store.record.update(record);
+            });
+    } else {
+        console.log("By pass for push to mongo with isMongo=true");
+        return store.record.update(record);
+    }
 }
 
 function removeAutoSavedRecord() {

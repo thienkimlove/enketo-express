@@ -14,7 +14,6 @@ import { t } from './translator';
 import records from './records-queue';
 import $ from 'jquery';
 import encryptor from './encryptor';
-import store from "./store";
 
 let form;
 let formSelector;
@@ -26,35 +25,38 @@ const formOptions = {
 };
 
 function loadRecordUser(user) {
-    connection.getStoreKey(user).then(
-        record => {
+
+    let recordFromMongo;
+
+    connection.getStoreKey(user)
+        .then( record => {
             if (record && record.instanceId) {
-                console.log(record.instanceId);
-                console.log(record.xml);
-
-                records.getAutoSavedRecord()
-                    .then( recordFromCache => {
-                        if ( !recordFromCache ) {
-                            records.updateAutoSavedRecord(record).then( () => {
-                                console.log( 'autosave successful' );
-                                console.log( 'quandm autosave successful.Wait for reload' );
-                                window.location.reload();
-                            } ).catch( error => {
-                                console.error( 'autosave error', error );
-                                return Promise.resolve({});
-                            } );
-                        } else {
-                            console.log('have already record from cache');
-                            return Promise.resolve({});
-
-                        }
-                    })
-
+                console.log("Got record from mongo for user=" + user + " and ID=" + record.enketoId);
+                recordFromMongo = record;
+                console.log("Go to check if have auto save or not?");
+                return records.getAutoSavedRecord();
             } else {
-                console.log("nothing");
+                console.log("Got record from mongo for user=" + user);
+                return Promise.resolve();
             }
-        }
-    );
+        })
+        .then( autoSaveRecord => {
+        if ( !autoSaveRecord && recordFromMongo) {
+            console.log("No autoSave record for this user in this browser. " +
+                "Update auto save this mongo");
+            recordFromMongo.isMongo = true;
+            return records.updateAutoSavedRecord(recordFromMongo);
+        } else {
+            console.log('have already auto save record from cache or mongo=null');
+            return Promise.resolve();
+        }}).then( () => {
+            console.log( 'Save successful' );
+            //window.location.reload();
+            return Promise.resolve(1);
+        }).catch( error => {
+            console.error( 'save error', error );
+            return Promise.resolve({});
+        });
 }
 
 
@@ -65,9 +67,9 @@ function init( selector, data ) {
     formSelector = selector;
     formData = data;
 
-    console.log('quandm-getStore');
+    console.log('Start Form');
 
-    return connection.getOnlineStatus()
+    return connection.getUser()
         .then( userToken => {
             if (userToken) {
                 if (typeof userToken == 'string' && /no_user/.test( userToken )) {
@@ -77,13 +79,21 @@ function init( selector, data ) {
                 } else {
                     let logoutLink = `Welcome, <b>${userToken}. </b><a id="click-logout" href="javascript:void(0)">${t( 'Logout' )}</a>`;
                     $( 'span.form-header-login' ).html(logoutLink);
-                    loadRecordUser(userToken);
+                    return loadRecordUser(userToken);
                 }
             }
+            return Promise.resolve();
 
         })
-        .then(_initializeRecords())
-        .then( _checkAutoSavedRecord )
+        .then((isReload) => {
+            if (isReload === 1) {
+                window.location.reload();
+            }
+            return _initializeRecords();
+        })
+        .then( () => {
+            return _checkAutoSavedRecord();
+        } )
         .then( record => {
             if ( !data.instanceStr && record && record.xml ) {
                 records.setActive( records.getAutoSavedKey() );
@@ -165,7 +175,7 @@ function _checkAutoSavedRecord() {
                 return rec;
             }
             if ( rec ) {
-                records.removeAutoSavedRecord();
+                return records.removeAutoSavedRecord();
             }
         } );
 }

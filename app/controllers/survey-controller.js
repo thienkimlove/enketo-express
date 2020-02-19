@@ -48,11 +48,11 @@ router
     .get( '/xform/:enketo_id', xform )
     .get( '/xform/:encrypted_enketo_id_single', xform )
     .get( '/xform/:encrypted_enketo_id_view', xform )
-    .get( '/logout', (req, res) => {
+    .get( '/q_logout', (req, res) => {
         userModel.clearCredentials(req);
         res.send('done');
     })
-    .get( '/connection', ( req, res ) => {
+    .get( '/q_user', ( req, res ) => {
         //res.status = 200;
         let userToken = userModel.getCredentials(req);
         if (userToken) {
@@ -61,8 +61,12 @@ router
             res.send("no_user");
         }
 
-    } );
-
+    } )
+    .get( '/connection', ( req, res ) => {
+            res.status = 200;
+            res.send( `connected ${Math.random()}`);
+        }
+    );
 
 // TODO: I suspect this check is no longer used and can be removed
 //function loggedInCheck( req, res, next ) {
