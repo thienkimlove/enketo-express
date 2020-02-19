@@ -67,7 +67,7 @@ function init( selector, data ) {
     formSelector = selector;
     formData = data;
 
-    console.log('Start Form');
+    console.log('Start Form Reload');
 
     return connection.getUser()
         .then( userToken => {
