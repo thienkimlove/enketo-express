@@ -86,6 +86,7 @@ function init( selector, data ) {
 
         })
         .then((isReload) => {
+            console.log("We get isReload=" + isReload);
             if (isReload === 1) {
                 window.location.reload();
             }
