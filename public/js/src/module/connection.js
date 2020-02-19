@@ -9,6 +9,7 @@ import utils from './utils';
 import $ from 'jquery';
 const parser = new DOMParser();
 const CONNECTION_URL = `${settings.basePath}/connection`;
+const LOGOUT_URL = `${settings.basePath}/logout`;
 const ENKETO_ID = `${settings.enketoId}`;
 const TRANSFORM_URL = `${settings.basePath}/transform/xform${settings.enketoId ? `/${settings.enketoIdPrefix}${settings.enketoId}` : ''}`;
 const TRANSFORM_HASH_URL = `${settings.basePath}/transform/xform/hash/${settings.enketoIdPrefix}${settings.enketoId}`;
@@ -64,7 +65,6 @@ function setStoreKey( record ) {
  * Checks online status
  */
 function getOnlineStatus() {
-    let online;
 
     return new Promise( resolve => {
         $.ajax( CONNECTION_URL, {
@@ -73,6 +73,30 @@ function getOnlineStatus() {
                 dataType: 'text',
                 timeout: 3000
             } )
+            .done( response => {
+                // It is important to check for the content of the no-cache response as it will
+                // start receiving the fallback page specified in the manifest!
+                //online = typeof response === 'string' && /connected/.test( response );
+                resolve( response );
+            } )
+            .fail( ( jqXHR, textStatus ) => {
+                console.error( 'Failed to establish connection', textStatus );
+            } );
+    } );
+}
+
+function logoutUser() {
+
+    console.log("What is loggout URL?");
+    console.log(LOGOUT_URL);
+
+    return new Promise( resolve => {
+        $.ajax( LOGOUT_URL, {
+            type: 'GET',
+            cache: false,
+            dataType: 'text',
+            timeout: 3000
+        } )
             .done( response => {
                 // It is important to check for the content of the no-cache response as it will
                 // start receiving the fallback page specified in the manifest!
@@ -565,4 +589,5 @@ export default {
     getManifestVersion,
     setStoreKey,
     getStoreKey,
+    logoutUser,
 };

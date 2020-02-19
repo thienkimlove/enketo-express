@@ -28,6 +28,16 @@ function getCredentials( req ) {
     return creds;
 }
 
+function clearCredentials(req) {
+    const auth = req.app.get( 'linked form and data server' ).authentication;
+    const authType = auth.type.toLowerCase();
+
+    if ( authType === 'basic' ) {
+        req.clearCookie(req.app.get( 'authentication cookie name'));
+    }
+}
+
 module.exports = {
-    getCredentials
+    getCredentials,
+    clearCredentials,
 };

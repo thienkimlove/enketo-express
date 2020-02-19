@@ -75,7 +75,8 @@ function init( selector, data ) {
                     let authLink = `<a id="show-login-popup" href="${loginUrl}">${t( 'Login' )}</a>`;
                     $( 'span.form-header-login' ).html(authLink);
                 } else {
-                    $( 'span.form-header-login' ).html(userToken);
+                    let logoutLink = `Welcome, <b>${userToken}. </b><a id="click-logout" href="javascript:void(0)">${t( 'Logout' )}</a>`;
+                    $( 'span.form-header-login' ).html(logoutLink);
                     loadRecordUser(userToken);
                 }
             }
@@ -527,6 +528,12 @@ function _autoSaveRecord() {
 
 function _setEventHandlers() {
     const $doc = $( document );
+
+    $('a#click-logout').click(function(){
+        connection.logoutUser().then(() => {
+            window.location.reload();
+        });
+    });
 
     $( 'button#submit-form' ).click( function() {
         const $button = $( this );

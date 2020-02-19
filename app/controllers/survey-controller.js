@@ -48,6 +48,10 @@ router
     .get( '/xform/:enketo_id', xform )
     .get( '/xform/:encrypted_enketo_id_single', xform )
     .get( '/xform/:encrypted_enketo_id_view', xform )
+    .get( '/logout', (req, res) => {
+        userModel.clearCredentials(req);
+        res.send('done');
+    })
     .get( '/connection', ( req, res ) => {
         //res.status = 200;
         let userToken = userModel.getCredentials(req);
