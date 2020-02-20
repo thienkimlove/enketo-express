@@ -55,6 +55,7 @@ router
     })
     .get( '/q_user', ( req, res ) => {
         //res.status = 200;
+        console.log('authentication cookie name: ' + req.app.get( 'authentication cookie name'));
         let userToken = userModel.getCredentials(req);
         if (userToken) {
             res.send(userToken.user);
