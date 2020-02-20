@@ -82,7 +82,7 @@ function offlineWebform( req, res, next ) {
         error.status = 405;
         next( error );
     } else {
-        console.log("request header come from : ");
+        console.log("request header come from where?: ");
         console.log(req.cookies);
         req.manifest = `${req.app.get( 'base path' )}/x/manifest.appcache`;
         webform( req, res, next );
