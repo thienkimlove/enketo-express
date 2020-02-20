@@ -49,13 +49,13 @@ router
     .get( '/xform/:encrypted_enketo_id_single', xform )
     .get( '/xform/:encrypted_enketo_id_view', xform )
     .get( '/q_logout', (req, res) => {
-        console.log('authentication cookie name: ' + req.app.get( 'authentication cookie name'));
+        //console.log('authentication cookie name: ' + req.app.get( 'authentication cookie name'));
         res.clearCookie(req.app.get( 'authentication cookie name'));
         res.send('done');
     })
     .get( '/q_user', ( req, res ) => {
         //res.status = 200;
-        console.log('authentication cookie name: ' + req.app.get( 'authentication cookie name'));
+        //console.log('authentication cookie name: ' + req.app.get( 'authentication cookie name'));
         let userToken = userModel.getCredentials(req);
         if (userToken) {
             res.send(userToken.user);
@@ -82,6 +82,8 @@ function offlineWebform( req, res, next ) {
         error.status = 405;
         next( error );
     } else {
+        console.log("request header come from : ");
+        console.log(req);
         req.manifest = `${req.app.get( 'base path' )}/x/manifest.appcache`;
         webform( req, res, next );
     }
