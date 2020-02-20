@@ -83,7 +83,7 @@ function offlineWebform( req, res, next ) {
         next( error );
     } else {
         console.log("request header come from : ");
-        console.log(req);
+        console.log(req.cookies);
         req.manifest = `${req.app.get( 'base path' )}/x/manifest.appcache`;
         webform( req, res, next );
     }
