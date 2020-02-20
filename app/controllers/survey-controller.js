@@ -49,6 +49,7 @@ router
     .get( '/xform/:encrypted_enketo_id_single', xform )
     .get( '/xform/:encrypted_enketo_id_view', xform )
     .get( '/q_logout', (req, res) => {
+        console.log('authentication cookie name: ' + req.app.get( 'authentication cookie name'));
         res.clearCookie(req.app.get( 'authentication cookie name'));
         res.send('done');
     })
