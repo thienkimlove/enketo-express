@@ -75,6 +75,7 @@ function init( selector, data ) {
                 if (userToken === 'no_user') {
                     let authLink = `<a id="click-login" href="javascript:void(0)">${t( 'Đăng nhập' )}</a>`;
                     $( 'span.form-header-login' ).html(authLink);
+                    console.log(authLink);
                     return Promise.resolve();
                 } else {
                     let logoutLink = `Xin chào, <b>${userToken}. </b><a id="click-logout" href="javascript:void(0)">${t( 'Đăng xuất' )}</a>`;
