@@ -74,8 +74,8 @@ function init( selector, data ) {
     return connection.getUser()
         .then( userToken => {
             if (userToken) {
-                if (typeof userToken == 'string' && /no_user/.test( userToken )) {
-                    let loginUrl = `${settings.loginUrl}?return_url=${encodeURIComponent( window.location.href )}`;
+                if (!userToken) {
+                    let loginUrl = `https://ff.scoach.vn/enketo/${settings.enketoId}`;
                     let authLink = `<a id="show-login-popup" href="${loginUrl}">${t( 'Login' )}</a>`;
                     $( 'span.form-header-login' ).html(authLink);
                     return Promise.resolve();

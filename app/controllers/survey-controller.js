@@ -48,22 +48,25 @@ router
     .get( '/xform/:enketo_id', xform )
     .get( '/xform/:encrypted_enketo_id_single', xform )
     .get( '/xform/:encrypted_enketo_id_view', xform )
-    .get( '/q_logout', (req, res) => {
-        //console.log('authentication cookie name: ' + req.app.get( 'authentication cookie name'));
-        res.clearCookie(req.app.get( 'authentication cookie name'));
-        res.send('done');
-    })
     .get( '/q_user', ( req, res ) => {
         //res.status = 200;
         //console.log('authentication cookie name: ' + req.app.get( 'authentication cookie name'));
-        let userToken = userModel.getCredentials(req);
-        if (userToken) {
-            res.send(userToken.user);
+        let username = req.getCookie('enketo_kobo_username');
+        if (username) {
+            res.send(username);
         } else {
-            res.send("no_user");
+            res.send("");
         }
+    })
+    .get( '/q_logout', ( req, res ) => {
+        res.clearCookie('kobonaut')
+            .clearCookie('enketo_kobo_username')
+            .clearCookie( req.app.get( 'authentication cookie name' ) )
+            .clearCookie( '__enketo_meta_username' )
+            .clearCookie( '__enketo_logout' );
 
-    } )
+        res.send(`done`)
+    })
     .get( '/connection', ( req, res ) => {
             res.status = 200;
             res.send( `connected ${Math.random()}`);

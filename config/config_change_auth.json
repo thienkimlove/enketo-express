@@ -54,7 +54,7 @@
     "name": "KoBo Toolbox",
     "authentication" : {
       "type": "cookie",
-      "url": "https://ff.scoach.vn/enketo1/{RETURNURL}"
+      "url": "https://ff.scoach.vn/enketo/{RETURNURL}"
     }
   },
   "app name": "Enketo Express for KoBo Toolbox"
