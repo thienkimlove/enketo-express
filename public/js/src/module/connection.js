@@ -47,11 +47,11 @@ function removeStoreKey( user, enketoId ) {
         }, 'json')
             .done( ( data, textStatus, jqXHR ) => {
                 console.log(data);
-                console.log("success remove");
+                console.log("success remove mongo");
                 resolve(data);
             } )
             .fail( jqXHR => {
-                console.log("error");
+                console.log("error remove mongo");
             } );
     } );
 }
