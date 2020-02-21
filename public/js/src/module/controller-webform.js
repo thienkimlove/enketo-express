@@ -122,6 +122,10 @@ function init( selector, data ) {
 
             formprogress = document.querySelector( '.form-progress' );
 
+            console.log("form data geted");
+            console.log(record);
+            console.log(data);
+
             _setEventHandlers();
             setLogoutLinkVisibility();
 
