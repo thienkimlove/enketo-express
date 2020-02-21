@@ -73,11 +73,11 @@ function init( selector, data ) {
         .then( userToken => {
             if (userToken) {
                 if (userToken === 'no_user') {
-                    let authLink = `<a id="click-login" href="javascript:void(0)">${t( 'Login' )}</a>`;
+                    let authLink = `<a id="click-login" href="javascript:void(0)">${t( 'Đăng nhập' )}</a>`;
                     $( 'span.form-header-login' ).html(authLink);
                     return Promise.resolve();
                 } else {
-                    let logoutLink = `Welcome, <b>${userToken}. </b><a id="click-logout" href="javascript:void(0)">${t( 'Logout' )}</a>`;
+                    let logoutLink = `Xin chào, <b>${userToken}. </b><a id="click-logout" href="javascript:void(0)">${t( 'Đăng xuất' )}</a>`;
                     $( 'span.form-header-login' ).html(logoutLink);
                     return loadRecordUser(userToken);
                 }
