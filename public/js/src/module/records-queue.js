@@ -243,7 +243,15 @@ function uploadQueue() {
                         // update the list by properly removing obsolete records, reactivating button(s)
                         _updateRecordList();
                     }
-                } ) ), Promise.resolve() );
+                } ).then(connection.getUser())
+                    .then((username) => {
+                        console.log("start to remove from mongo have username=" + username);
+                        if(username!=='no_user') {
+                            return connection.removeStoreKey(username, settings.enketoId);
+                        } else {
+                            return Promise.resolve();
+                        }
+                    }) ), Promise.resolve() );
         } );
 }
 

@@ -322,15 +322,6 @@ function _submitRecord() {
                 resolve( record );
             }
         } )
-        .then(connection.getUser())
-        .then((username) => {
-            console.log("start to remove from mongo have username=" + username);
-            if(username!=='no_user') {
-                return connection.removeStoreKey(username, settings.enketoId);
-            } else {
-                return Promise.resolve();
-            }
-        })
         .then( connection.uploadRecord )
         .then( result => {
             result = result || {};
