@@ -179,6 +179,8 @@ function xform( req, res, next ) {
         .then( communicator.getXFormInfo )
         .then( communicator.getXForm )
         .then( survey => {
+            console.log("All survey info get quandm");
+            console.log(survey);
             res
                 .set( 'Content-Type', 'text/xml' )
                 .send( survey.xform );
