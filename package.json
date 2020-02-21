@@ -21,7 +21,8 @@
     "scripts": {
         "start": "node .",
         "test": "grunt test",
-        "postinstall": "grunt"
+        "postinstall": "grunt",
+        "gulp": "gulp"
     },
     "private": true,
     "license": "Apache-2.0",
