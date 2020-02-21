@@ -32,6 +32,7 @@
         "@babel/preset-env": "^7.1.0",
         "aliasify": "2.1.x",
         "babelify": "^10.0.0",
+        "base64url": "^3.0.1",
         "basic-auth": "2.0.x",
         "body-parser": "1.x.x",
         "bristol": "0.4.x",

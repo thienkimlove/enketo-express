@@ -1,0 +1,57 @@
+{
+    "widgets": [
+        "note", 
+        "select-desktop", 
+        "select-mobile", 
+        "autocomplete", 
+        "geo", 
+        "geo-esri", 
+        "textarea", 
+        "table", 
+        "radio", 
+        "date", 
+        "time", 
+        "datetime", 
+        "select-media", 
+        "file", 
+        "draw", 
+        "likert", 
+        "range", 
+        "rank", 
+        "columns", 
+        "analog-scale", 
+        "image-view", 
+        "comment", 
+        "image-map", 
+        "date-native", 
+        "date-mobile", 
+        "url", 
+        "text-max", 
+        "../../../node_modules/enketo-image-customization-widget/image-customization", 
+        "../../../node_modules/enketo-literacy-test-widget/literacywidget"
+    ], 
+    "google": {
+        "analytics": {
+            "domain": "ee.scoach.vn", 
+            "ua": ""
+        }, 
+        "api key": ""
+    }, 
+    "redis": {
+        "main": {
+            "host": "redis-main.scoach.private", 
+            "port": "6379"
+        }, 
+        "cache": {
+            "host": "redis-cache.scoach.private", 
+            "port": "6380"
+        }
+    }, 
+    "linked form and data server": {
+        "encryption key": "378fee231ab53c1f721d3b43fb305fee4184340c26992ea247fe14e815e9ccbf941862917af8813350b144db4d3d04e34bdf42e3ef79343dee78f7b1", 
+        "api key": "bd137e51220f53f4eb4a6a1e545fb47f5a674490b1afb7846c4c440d08c361263d35b724de6f68c762acdf92105fc1beeef79b4a5f27762afb471488", 
+        "server url": "", 
+        "name": "KoBo Toolbox"
+    }, 
+    "app name": "Enketo Express for KoBo Toolbox"
+}
