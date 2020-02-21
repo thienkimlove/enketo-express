@@ -107,7 +107,7 @@ function updateAutoSavedRecord( record ) {
             .then( userToken => {
                 console.log("userToken");
                 if (userToken) {
-                    if (typeof userToken == 'string' && /no_user/.test( userToken )) {
+                    if (userToken === 'no_user') {
                         console.log("not login user");
                     } else {
                         console.log("haveToken");

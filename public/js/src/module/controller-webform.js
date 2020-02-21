@@ -25,9 +25,7 @@ const formOptions = {
 };
 
 function loadRecordUser(user) {
-
     let recordFromMongo;
-
     connection.getStoreKey(user)
         .then( record => {
             if (record && record.instanceId) {

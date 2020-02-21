@@ -23,10 +23,6 @@ function getCredentials( req ) {
                 'bearer': tokenValue
             };
         }
-    } else {
-        creds = {
-            'username': req.cookies['enketo_kobo_username']
-        }
     }
 
     return creds;

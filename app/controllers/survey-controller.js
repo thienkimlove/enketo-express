@@ -5,6 +5,7 @@ const surveyModel = require( '../models/survey-model' );
 const userModel = require( '../models/user-model' );
 const config = require( '../models/config-model' ).server;
 const express = require( 'express' );
+const request = require( 'request' );
 const router = express.Router();
 const routerUtils = require( '../lib/router-utils' );
 // var debug = require( 'debug' )( 'survey-controller' );
@@ -51,18 +52,19 @@ router
     .get( '/q_user', ( req, res ) => {
         //res.status = 200;
         //console.log('authentication cookie name: ' + req.app.get( 'authentication cookie name'));
-        let creds = userModel.getCredentials(req);
-        if (creds.username) {
-            res.send(creds.username);
+        if (req.cookies['kobonaut']) {
+            //res.send("need_redirect");
+            request({uri: "https://ff.scoach.vn/enketo_user/"},
+                function(error, response, body) {
+                    console.log(body);
+                    res.send(body);
+                });
         } else {
             res.send("no_user");
         }
     })
     .get( '/q_logout', ( req, res ) => {
-
         res.clearCookie('kobonaut', {path:'/', domain:'.scoach.vn'});
-        res.clearCookie('enketo_kobo_username', {path:'/', domain:'.scoach.vn'});
-
         res.send(`done`)
     })
     .get( '/connection', ( req, res ) => {
