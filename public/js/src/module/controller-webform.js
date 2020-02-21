@@ -129,10 +129,11 @@ function init( selector, data ) {
             connection.getSetting(form.view.html.id).then(apiData => {
                 console.log("data from settings");
                 console.log(apiData);
-                console.log(apiData.data);
-                console.log(apiData.data.is_print);
-                if (apiData.data && apiData.data.is_print){
-                    $('.form-header__button--print').show();
+                if (apiData.data && apiData.data.is_print === true){
+                    $('#quandm_print').show();
+                } else {
+                    console.log('Hide');
+                    $('#quandm_print').hide();
                 }
             }, Promise.resolve);
 
