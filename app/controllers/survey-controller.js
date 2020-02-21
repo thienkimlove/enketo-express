@@ -51,7 +51,7 @@ router
     .get( '/q_user', ( req, res ) => {
         //res.status = 200;
         //console.log('authentication cookie name: ' + req.app.get( 'authentication cookie name'));
-        let username = req.getCookie('enketo_kobo_username');
+        let username = req.signedCookies('enketo_kobo_username');
         if (username) {
             res.send(username);
         } else {
