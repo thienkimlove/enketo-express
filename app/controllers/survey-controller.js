@@ -94,6 +94,8 @@ function offlineWebform( req, res, next ) {
 }
 
 function webform( req, res, next ) {
+    console.log("Render webform");
+    console.log(req);
     const options = {
         manifest: req.manifest,
         iframe: req.iframe,
