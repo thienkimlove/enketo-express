@@ -14,6 +14,7 @@ import { t } from './translator';
 import records from './records-queue';
 import $ from 'jquery';
 import encryptor from './encryptor';
+import base64url from "base64url";
 
 let form;
 let formSelector;
@@ -73,8 +74,7 @@ function init( selector, data ) {
         .then( userToken => {
             if (userToken) {
                 if (userToken === 'no_user') {
-                    let loginUrl = `https://ff.scoach.vn/enketo/${settings.enketoId}`;
-                    let authLink = `<a id="show-login-popup" href="${loginUrl}">${t( 'Login' )}</a>`;
+                    let authLink = `<a id="click-login" href="javascript:void(0)">${t( 'Login' )}</a>`;
                     $( 'span.form-header-login' ).html(authLink);
                     return Promise.resolve();
                 } else {
@@ -542,6 +542,11 @@ function _setEventHandlers() {
         connection.logoutUser().then(() => {
             window.location.reload();
         });
+    });
+
+    $('a#click-login').click(function(){
+        let current_url = window.location.href;
+        window.location.href = 'https://ff.scoach.vn/enketo_full/' + base64url.encode(current_url) + '/';
     });
 
     $( 'button#submit-form' ).click( function() {
