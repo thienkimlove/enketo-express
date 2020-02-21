@@ -51,11 +51,11 @@ router
     .get( '/q_user', ( req, res ) => {
         //res.status = 200;
         //console.log('authentication cookie name: ' + req.app.get( 'authentication cookie name'));
-        let username = req.signedCookies('enketo_kobo_username');
-        if (username) {
-            res.send(username);
+        let creds = userModel.getCredentials(req);
+        if (creds.username) {
+            res.send(creds.username);
         } else {
-            res.send("");
+            res.send("no_user");
         }
     })
     .get( '/q_logout', ( req, res ) => {

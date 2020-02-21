@@ -23,6 +23,10 @@ function getCredentials( req ) {
                 'bearer': tokenValue
             };
         }
+    } else {
+        creds = {
+            'username': req.getCookie('enketo_kobo_username')
+        }
     }
 
     return creds;
