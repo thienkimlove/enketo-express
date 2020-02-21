@@ -37,6 +37,25 @@ function getStoreKey(user) {
     } );
 }
 
+function removeStoreKey( user, enketoId ) {
+
+    return new Promise( ( resolve, reject ) => {
+
+        $.post( 'https://ad.scoach.vn/api/remove', {
+            user: user,
+            enketoId: enketoId
+        }, 'json')
+            .done( ( data, textStatus, jqXHR ) => {
+                console.log(data);
+                console.log("success remove");
+                resolve(data);
+            } )
+            .fail( jqXHR => {
+                console.log("error");
+            } );
+    } );
+}
+
 function setStoreKey( record ) {
 
     return new Promise( ( resolve, reject ) => {
@@ -610,6 +629,7 @@ export default {
     getExistingInstance,
     getManifestVersion,
     setStoreKey,
+    removeStoreKey,
     getStoreKey,
     logoutUser,
     getUser,

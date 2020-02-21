@@ -337,6 +337,15 @@ function _submitRecord() {
             // this event is used in communicating back to iframe parent window
             document.dispatchEvent( events.SubmissionSuccess() );
 
+            //clear the log if login.
+
+            connection.getUser()
+                .then((username) => {
+                    if(username!=='no_user') {
+                        connection.removeStoreKey(username, settings.enketoId);
+                    }
+                });
+
             if ( redirect ) {
                 if ( !settings.multipleAllowed ) {
                     const now = new Date();
