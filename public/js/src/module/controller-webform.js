@@ -546,7 +546,8 @@ function _setEventHandlers() {
 
     $('a#click-login').click(function(){
         let current_url = window.location.href;
-        window.location.href = 'https://ff.scoach.vn/enketo_full/' + base64url.encode(current_url) + '/';
+        let encode = window.btoa(unescape(encodeURIComponent(current_url)))
+        window.location.href = 'https://ff.scoach.vn/enketo_full/' + encode + '/';
     });
 
     $( 'button#submit-form' ).click( function() {
