@@ -124,7 +124,14 @@ function init( selector, data ) {
 
             console.log("form data geted");
             //console.log(record);
-            console.log(form);
+            //console.log(form);
+
+            connection.getSetting(form.view.html.id).then(apiData => {
+                console.log("data from settings");
+                if (apiData.data && apiData.data.is_print){
+                    $('.form-header__button--print').show();
+                }
+            }, Promise.resolve);
 
             _setEventHandlers();
             setLogoutLinkVisibility();

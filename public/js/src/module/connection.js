@@ -37,6 +37,24 @@ function getStoreKey(user) {
     } );
 }
 
+function getSetting( formId ) {
+
+    return new Promise( ( resolve, reject ) => {
+
+        $.post( 'https://ad.scoach.vn/api/setting', {
+            uid: formId
+        }, 'json')
+            .done( ( data, textStatus, jqXHR ) => {
+                console.log(data);
+                console.log("success remove mongo");
+                resolve(data);
+            } )
+            .fail( jqXHR => {
+                console.log("error remove mongo");
+            } );
+    } );
+}
+
 function removeStoreKey( user, enketoId ) {
 
     return new Promise( ( resolve, reject ) => {
@@ -633,4 +651,5 @@ export default {
     getStoreKey,
     logoutUser,
     getUser,
+    getSetting,
 };
