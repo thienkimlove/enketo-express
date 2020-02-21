@@ -302,6 +302,7 @@ function _submitRecord() {
 
 
 
+
     return new Promise( resolve => {
             const record = {
                 'xml': form.getDataStr( include ),
@@ -321,6 +322,15 @@ function _submitRecord() {
                 resolve( record );
             }
         } )
+        .then(connection.getUser())
+        .then((username) => {
+            console.log("start to remove from mongo have username=" + username);
+            if(username!=='no_user') {
+                return connection.removeStoreKey(username, settings.enketoId);
+            } else {
+                return Promise.resolve();
+            }
+        })
         .then( connection.uploadRecord )
         .then( result => {
             result = result || {};
@@ -339,19 +349,7 @@ function _submitRecord() {
 
             //clear the log if login.
 
-            console.log("start to remove from mongo");
 
-            connection.getUser()
-                .then((username) => {
-                    console.log("start to remove from mongo have username=" + username);
-                    if(username!=='no_user') {
-                       return connection.removeStoreKey(username, settings.enketoId);
-                    } else {
-                        return Promise.resolve();
-                    }
-                }).then(() => {
-                console.log("done to remove from mongo");
-            });
 
             if ( redirect ) {
                 if ( !settings.multipleAllowed ) {
