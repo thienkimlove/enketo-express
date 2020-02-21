@@ -59,11 +59,12 @@ router
         }
     })
     .get( '/q_logout', ( req, res ) => {
-        res.clearCookie('kobonaut')
-            .clearCookie('enketo_kobo_username')
-            .clearCookie( req.app.get( 'authentication cookie name' ) )
-            .clearCookie( '__enketo_meta_username' )
-            .clearCookie( '__enketo_logout' );
+
+        res.clearCookie('kobonaut', {path:'/'});
+        res.clearCookie('enketo_kobo_username', {path:'/'});
+        res.clearCookie(req.app.get( 'authentication cookie name' ), {path:'/'});
+        res.clearCookie('__enketo_meta_username', {path:'/'});
+        res.clearCookie('__enketo_logout', {path:'/'});
 
         res.send(`done`)
     })
