@@ -39,20 +39,22 @@ function getStoreKey(user) {
 
 function getSetting( formId ) {
 
-    return new Promise( ( resolve, reject ) => {
 
-        $.post( 'https://ad.scoach.vn/api/setting', {
-            uid: formId
-        }, 'json')
-            .done( ( data, textStatus, jqXHR ) => {
-                console.log(data);
-                console.log("success remove mongo");
-                resolve(data);
+    return new Promise( resolve => {
+        $.ajax( 'https://ad.scoach.vn/api/setting?uid=' + formId, {
+            type: 'GET',
+            cache: false,
+            dataType: 'json',
+            timeout: 3000
+        } )
+            .done( response => {
+                resolve( response );
             } )
-            .fail( jqXHR => {
-                console.log("error remove mongo");
+            .fail( ( jqXHR, textStatus ) => {
+                console.error( 'Failed to establish connection', textStatus );
             } );
     } );
+
 }
 
 function removeStoreKey( user, enketoId ) {
