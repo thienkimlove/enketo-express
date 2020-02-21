@@ -14,7 +14,6 @@ import { t } from './translator';
 import records from './records-queue';
 import $ from 'jquery';
 import encryptor from './encryptor';
-import base64url from "base64url";
 
 let form;
 let formSelector;
