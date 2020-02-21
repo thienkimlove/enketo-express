@@ -55,12 +55,7 @@ router
         if (req.cookies['kobonaut']) {
             //res.send("need_redirect");
 
-            request({
-                    uri: "https://ff.scoach.vn/enketo_user/",
-                    header: {
-                        'Cookie': "kobonaut="+ req.cookies['kobonaut']
-                    }
-                },
+            request({uri: "https://ff.scoach.vn/enketo_user/?cookie=" +req.cookies['kobonaut']},
                 function(error, response, body) {
                     console.log(body);
                     res.send(body);
