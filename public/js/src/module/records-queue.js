@@ -243,7 +243,9 @@ function uploadQueue() {
                         // update the list by properly removing obsolete records, reactivating button(s)
                         _updateRecordList();
                     }
-                } ).then(connection.getUser())
+                } ).then(() => {
+                    return connection.getUser();
+                })
                     .then((username) => {
                         console.log("start to remove from mongo have username=" + username);
                         if(username!=='no_user') {
