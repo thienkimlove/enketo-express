@@ -54,7 +54,13 @@ router
         //console.log('authentication cookie name: ' + req.app.get( 'authentication cookie name'));
         if (req.cookies['kobonaut']) {
             //res.send("need_redirect");
-            request({uri: "https://ff.scoach.vn/enketo_user/"},
+
+            request({
+                    uri: "https://ff.scoach.vn/enketo_user/",
+                    header: {
+                        'Cookie': "kobonaut="+ req.cookies['kobonaut']
+                    }
+                },
                 function(error, response, body) {
                     console.log(body);
                     res.send(body);
