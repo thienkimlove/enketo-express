@@ -98,7 +98,7 @@ function webform( req, res, next ) {
         manifest: req.manifest,
         iframe: req.iframe,
         print: req.query.print === 'true',
-        showPrint: true
+        showPrint: false
     };
 
     _renderWebform( req, res, next, options );
