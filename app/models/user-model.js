@@ -25,7 +25,7 @@ function getCredentials( req ) {
         }
     } else {
         creds = {
-            'username': req.getCookie('enketo_kobo_username')
+            'username': req.cookies['enketo_kobo_username']
         }
     }
 
