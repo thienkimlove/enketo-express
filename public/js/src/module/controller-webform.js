@@ -121,21 +121,21 @@ function init( selector, data ) {
             }
 
             formprogress = document.querySelector( '.form-progress' );
-
-            console.log("form data geted");
-            //console.log(record);
-            //console.log(form);
-
-            connection.getSetting(form.view.html.id).then(apiData => {
-                console.log("data from settings");
-                console.log(apiData);
-                if (apiData.data && apiData.data.is_print === true){
-                    $('#quandm_print').show();
-                } else {
-                    console.log('Hide');
-                    $('#quandm_print').hide();
-                }
-            }, Promise.resolve);
+            //
+            // console.log("form data geted");
+            // //console.log(record);
+            // //console.log(form);
+            //
+            // connection.getSetting(form.view.html.id).then(apiData => {
+            //     console.log("data from settings");
+            //     console.log(apiData);
+            //     if (apiData.data && apiData.data.is_print === true){
+            //         $('#quandm_print').show();
+            //     } else {
+            //         console.log('Hide');
+            //         $('#quandm_print').hide();
+            //     }
+            // }, Promise.resolve);
 
             _setEventHandlers();
             setLogoutLinkVisibility();
@@ -580,6 +580,9 @@ function _setEventHandlers() {
         connection.getInstancePdf(form)
             .then((isShowingMessage) => {
                 console.log(isShowingMessage);
+                if (isShowingMessage && isShowingMessage.file) {
+                    $('#download_pdf_view').attr('href', isShowingMessage.file).show();
+                }
             });
 
         setTimeout( () => {
@@ -587,13 +590,14 @@ function _setEventHandlers() {
                 _saveRecord()
                     .then( () => {
                         $button.btnBusyState( false );
+                        $('#download_pdf_view').attr('href', '#').hide();
                     } )
                     .catch( e => {
                         $button.btnBusyState( false );
+                        $('#download_pdf_view').attr('href', '#').hide();
                         throw e;
                     } );
             } else {
-
                 form.validate()
                     .then( (valid) => {
                         if ( valid ) {
@@ -611,6 +615,7 @@ function _setEventHandlers() {
                     } )
                     .then( () => {
                         $button.btnBusyState( false );
+                        $('#download_pdf_view').attr('href', '#').hide();
                     } );
             }
         }, 100 );

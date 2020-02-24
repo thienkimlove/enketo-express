@@ -21,6 +21,7 @@ section.form-footer
         button#submit-form.btn.btn-primary
           i.icon.icon-check= ' '
           | #{t('formfooter.submit.btn')}
+      a#download_pdf_view.btn-download.hide(href="#")= t('Download as PDF')
       a.btn.btn-primary.next-page(href="#")= t('form.pages.next')
       include _logout
       include _enketo-power
