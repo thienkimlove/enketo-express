@@ -581,7 +581,7 @@ function _setEventHandlers() {
             .then((isShowingMessage) => {
                 console.log(isShowingMessage);
                 if (isShowingMessage && isShowingMessage.file) {
-                    $('#download_pdf_view').attr('href', isShowingMessage.file).show();
+                    $('#download_pdf_view').attr('href', isShowingMessage.file).toggleClass('hide');
                 }
             });
 
@@ -590,11 +590,11 @@ function _setEventHandlers() {
                 _saveRecord()
                     .then( () => {
                         $button.btnBusyState( false );
-                        $('#download_pdf_view').attr('href', '#').hide();
+                        $('#download_pdf_view').attr('href', '#').toggleClass('hide');
                     } )
                     .catch( e => {
                         $button.btnBusyState( false );
-                        $('#download_pdf_view').attr('href', '#').hide();
+                        $('#download_pdf_view').attr('href', '#').toggleClass('hide');
                         throw e;
                     } );
             } else {
@@ -615,7 +615,7 @@ function _setEventHandlers() {
                     } )
                     .then( () => {
                         $button.btnBusyState( false );
-                        $('#download_pdf_view').attr('href', '#').hide();
+                        $('#download_pdf_view').attr('href', '#').toggleClass('hide');
                     } );
             }
         }, 100 );
