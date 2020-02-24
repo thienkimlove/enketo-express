@@ -43,10 +43,9 @@ function getInstancePdf(form)
 
         $.post( 'https://ad.scoach.vn/api/instance', {
             formId: form.view.html.id,
-            instanceXml: form.getDataStr(),
             instanceId: form.instanceId,
-            enketoId: form.enketoId,
-
+            enketoId: settings.enketoId,
+            instanceXml: form.getDataStr()
         }, 'json')
             .done( ( data, textStatus, jqXHR ) => {
                 console.log(data);
