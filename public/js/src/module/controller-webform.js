@@ -581,7 +581,7 @@ function _setEventHandlers() {
             .then((isShowingMessage) => {
                 console.log(isShowingMessage);
                 if (isShowingMessage && isShowingMessage.file) {
-                    $('#download_pdf_view').attr('href', isShowingMessage.file).toggleClass('hide');
+                    $('#download_pdf_view').attr('href', isShowingMessage.file).removeClass('hide');
                 }
             });
 
@@ -618,8 +618,8 @@ function _setEventHandlers() {
         }, 100 );
 
         setTimeout(() => {
-            $('#download_pdf_view').attr('href', '#').toggleClass('hide');
-        }, 5*1000);
+            $('#download_pdf_view').attr('href', '#').addClass('hide');
+        }, 50*1000);
 
         return false;
     } );
