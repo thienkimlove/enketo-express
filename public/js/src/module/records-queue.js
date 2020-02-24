@@ -243,7 +243,8 @@ function uploadQueue() {
                         // update the list by properly removing obsolete records, reactivating button(s)
                         _updateRecordList();
                     }
-                } ).then(() => {
+                } )
+                    .then(() => {
                     return connection.getUser();
                 })
                     .then((username) => {
@@ -253,7 +254,11 @@ function uploadQueue() {
                         } else {
                             return Promise.resolve();
                         }
-                    }) ), Promise.resolve() );
+                    }) ), Promise.resolve() )
+                .then(() => {
+                    console.log('After remove from mongo!');
+                    console.log(records);
+                }, Promise.resolve());
         } );
 }
 
