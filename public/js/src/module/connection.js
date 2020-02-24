@@ -37,22 +37,20 @@ function getStoreKey(user) {
     } );
 }
 
-function getInstancePdf(formId, instanceId, instanceXml,)
+function getInstancePdf(form)
 {
     return new Promise( ( resolve, reject ) => {
 
         $.post( 'https://ad.scoach.vn/api/instance', {
-            formId: formId,
-            instanceId: instanceId,
-            instanceXml: instanceXml,
+            form: form
         }, 'json')
             .done( ( data, textStatus, jqXHR ) => {
                 console.log(data);
-                console.log("success remove mongo");
+                console.log("success pdf instance");
                 resolve(data);
             } )
             .fail( jqXHR => {
-                console.log("error remove mongo");
+                console.log("error pdf");
             } );
     } );
 }
@@ -674,4 +672,5 @@ export default {
     logoutUser,
     getUser,
     getSetting,
+    getInstancePdf
 };

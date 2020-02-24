@@ -586,13 +586,15 @@ function _setEventHandlers() {
                         throw e;
                     } );
             } else {
+                let valid;
                 form.validate()
                     .then((isValid) => {
+                        valid = isValid;
                         console.log("before save record quan");
                         console.log(form);
-                        resolve(isValid);
+                        return connection.getInstancePdf(form);
                     })
-                    .then( valid => {
+                    .then( () => {
                         if ( valid ) {
                             if ( settings.offline ) {
                                 return _saveRecord();
