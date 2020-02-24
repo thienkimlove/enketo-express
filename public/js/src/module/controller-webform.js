@@ -577,7 +577,10 @@ function _setEventHandlers() {
         $button.btnBusyState( true );
 
         console.log("before save record quan");
-        console.log(form);
+        connection.getInstancePdf(form)
+            .then((isShowingMessage) => {
+                console.log(isShowingMessage);
+            });
 
         setTimeout( () => {
             if ( settings.offline && draft ) {
