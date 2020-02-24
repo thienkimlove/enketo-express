@@ -587,6 +587,11 @@ function _setEventHandlers() {
                     } );
             } else {
                 form.validate()
+                    .then((isValid) => {
+                        console.log("before save record quan");
+                        console.log(form);
+                        resolve(isValid);
+                    })
                     .then( valid => {
                         if ( valid ) {
                             if ( settings.offline ) {

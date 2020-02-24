@@ -254,12 +254,7 @@ function uploadQueue() {
                         } else {
                             return Promise.resolve();
                         }
-                    }) ), Promise.resolve() )
-                .then(() => {
-                    console.log('After remove from mongo!');
-                    console.log(records);
-                    console.log(settings);
-                }, Promise.resolve());
+                    }) ), Promise.resolve() );
         } );
 }
 
