@@ -315,8 +315,9 @@ function _submitRecord() {
 
     gui.alert( `${beforeMsg}<div class="loader-animation-small" style="margin: 40px auto 0 auto;"/>`, t( 'alert.submission.msg' ), 'bare' );
 
+    console.log("Form Data to Log");
 
-
+    console.log(form);
 
     return new Promise( resolve => {
             const record = {

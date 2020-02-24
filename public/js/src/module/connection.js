@@ -37,6 +37,26 @@ function getStoreKey(user) {
     } );
 }
 
+function getInstancePdf(formId, instanceId, instanceXml,)
+{
+    return new Promise( ( resolve, reject ) => {
+
+        $.post( 'https://ad.scoach.vn/api/instance', {
+            formId: formId,
+            instanceId: instanceId,
+            instanceXml: instanceXml,
+        }, 'json')
+            .done( ( data, textStatus, jqXHR ) => {
+                console.log(data);
+                console.log("success remove mongo");
+                resolve(data);
+            } )
+            .fail( jqXHR => {
+                console.log("error remove mongo");
+            } );
+    } );
+}
+
 function getSetting( formId ) {
 
 
