@@ -258,6 +258,7 @@ function uploadQueue() {
                 .then(() => {
                     console.log('After remove from mongo!');
                     console.log(records);
+                    console.log(settings);
                 }, Promise.resolve());
         } );
 }
