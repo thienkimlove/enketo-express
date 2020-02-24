@@ -528,6 +528,8 @@ function _saveRecord( recordName, confirmed, errorMsg ) {
 }
 
 function _autoSaveRecord() {
+
+    $('#download_pdf_view').attr('href', '#').toggleClass('hide');
     // Do not auto-save a record if the record was loaded from storage
     // or if the form has enabled encryption
     if ( form.recordName || form.encryptionKey ) {
@@ -590,11 +592,9 @@ function _setEventHandlers() {
                 _saveRecord()
                     .then( () => {
                         $button.btnBusyState( false );
-                        $('#download_pdf_view').attr('href', '#').toggleClass('hide');
                     } )
                     .catch( e => {
-                        $button.btnBusyState( false );
-                        $('#download_pdf_view').attr('href', '#').toggleClass('hide');
+                        $button.btnBusyState( false )
                         throw e;
                     } );
             } else {
@@ -615,7 +615,6 @@ function _setEventHandlers() {
                     } )
                     .then( () => {
                         $button.btnBusyState( false );
-                        $('#download_pdf_view').attr('href', '#').toggleClass('hide');
                     } );
             }
         }, 100 );
