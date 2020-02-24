@@ -28,7 +28,7 @@ function get( url, options = {} ) {
     //await page.waitForFunction( 'window.printReady === true', { polling: 200 } );
     let browser;
     let page;
-    return puppeteer.launch( { headless: true } )
+    return puppeteer.launch( { headless: true, args: ['--no-sandbox'] } )
         .then( brows => {
             browser = brows;
             return browser.newPage();
