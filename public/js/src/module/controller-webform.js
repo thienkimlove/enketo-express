@@ -575,6 +575,10 @@ function _setEventHandlers() {
         const $button = $( this );
         const draft = _getDraftStatus();
         $button.btnBusyState( true );
+
+        console.log("before save record quan");
+        console.log(form);
+
         setTimeout( () => {
             if ( settings.offline && draft ) {
                 _saveRecord()
@@ -588,13 +592,6 @@ function _setEventHandlers() {
             } else {
 
                 form.validate()
-                    .then((isValid) => {
-                        //valid = isValid;
-                        console.log("before save record quan");
-                        console.log(form);
-                        //return connection.getInstancePdf(form);
-                        return Promise.resolve(isValid);
-                    })
                     .then( (valid) => {
                         if ( valid ) {
                             if ( settings.offline ) {
